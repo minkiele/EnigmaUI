@@ -1,8 +1,8 @@
 module.exports = {
   context: __dirname,
-  entry: './src/EnigmaUI.js',
+  entry: './src/app.js',
   output: {
-    filename: 'dist/EnigmaUI.js'
+    filename: 'dist/js/app.js'
   },
   module: {
     loaders: [{
