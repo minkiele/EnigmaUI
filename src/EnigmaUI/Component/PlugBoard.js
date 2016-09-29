@@ -16,9 +16,14 @@ export default React.createClass({
 
   render: function () {
 
-    let wirings = this.state.wirings.map(function (wiring, index) {
-      let key = `wiring-${index}`;
-      return <li key={key}><EnigmaPlugBoardWiring {...wiring} /></li>
+    let wirings = this.state.wirings.map((wiring, index) => {
+      let key = `wiring-${index + 1}`;
+      return (
+        <li key={key}>
+          <EnigmaPlugBoardWiring {...wiring} />
+          <button onClick={() => {this.removeWiring(index)}}>Remove</button>
+        </li>
+      );
     });
 
     return (
@@ -41,6 +46,14 @@ export default React.createClass({
         });
         return {wirings: wirings};
       }
+    });
+  },
+  removeWiring: function (index) {
+    this.setState((previousState) => {
+      previousState.wirings.splice(index, 1);
+      return {
+        wirings: previousState.wirings
+      };
     });
   },
   componentDidMount: function () {
