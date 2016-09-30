@@ -1,10 +1,12 @@
 import React from 'react';
 
+export const INITIAL_REFLECTOR_TYPE = '';
+
 export default React.createClass({
 
   getInitialState: function () {
     return {
-      type: this.props.type || null
+      type: this.props.type || INITIAL_REFLECTOR_TYPE
     };
   },
   renderChoices: function () {
@@ -19,13 +21,18 @@ export default React.createClass({
     }
     return options;
   },
+  updateType: function (evt) {
+    this.updateState({
+      type: evt.target.value
+    });
+  },
   render: function () {
     let choices = this.renderChoices();
     return (
       <div className="enigmaReflector">
         <div className="enigmaReflectorType">
           <label>Type</label>
-          <select value={this.state.type}>
+          <select value={this.state.type} onChange={this.updateType}>
             <option value="">Choose a reflector</option>
             {choices}
           </select>

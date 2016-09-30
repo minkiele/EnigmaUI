@@ -33,6 +33,6 @@ export default React.createClass({
 
   render: function () {
     let rotorTypes = this.getRotorTypes();
-    return <Rotor {...this.props} choices={rotorTypes}/>;
+    return <Rotor {...this.props} choices={rotorTypes} />;
   }
 });
