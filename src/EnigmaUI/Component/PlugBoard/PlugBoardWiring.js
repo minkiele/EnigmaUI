@@ -23,11 +23,30 @@ export default React.createClass({
   setRightPlug: function (evt) {
     this.setPlug('rightPlug', evt);
   },
+  renderAlphabet: function () {
+    let alphabet = [];
+    let aIndex = 'A'.charCodeAt(0);
+    
+    for(let i = 0; i < 26; i += 1) {
+      let letter = String.fromCharCode(aIndex + i);
+      alphabet.push(<option key={letter} value={letter}>{letter}</option>);
+    }
+    return alphabet;
+  },
   render: function () {
+    let plugAlphabet = this.renderAlphabet();
+    // let rightPlugAlphabet = this.renderAlphabet();
+
     return (
       <div className="enigmaPlugBoardWiring">
-        <input type="text" maxLength="1" pattern="[A-Z]" value={this.state.leftPlug} onChange={this.setLeftPlug}/>
-        <input type="text" maxLength="1" pattern="[A-Z]" value={this.state.rightPlug} onChange={this.setRightPlug}/>
+        <select value={this.state.leftPlug} onChange={this.setLeftPlug}>
+          <option value=""></option>
+          {plugAlphabet}
+        </select>
+        <select value={this.state.rightPlug} onChange={this.setRightPlug}>
+          <option value=""></option>
+          {plugAlphabet}
+        </select>
       </div>
     );
   }
