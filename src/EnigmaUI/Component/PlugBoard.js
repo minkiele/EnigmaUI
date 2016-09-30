@@ -7,21 +7,24 @@ export default React.createClass({
   getInitialState: function () {
 
     let initialState = {
-      wirings: []
+      wirings: {}
     };
 
     return initialState;
 
   },
-
+  getNewWiringKey: function () {
+    let now = new Date();
+    return `w${now.getTime()}{now.getMilliseconds()}`;
+  },
   render: function () {
 
-    let wirings = this.state.wirings.map((wiring, index) => {
-      let key = `wiring-${index + 1}`;
+    let wirings = Object.keys(this.state.wirings).map((key) => {
+      let wiring = this.state.wirings[key];
       return (
         <li key={key}>
-          <EnigmaPlugBoardWiring {...wiring} />
-          <button onClick={() => {this.removeWiring(index)}}>Remove</button>
+          <EnigmaPlugBoardWiring initialLeftPlug={wiring.leftPlug} initialRightPlug={wiring.rightPlug} updateWiring={(wiring) => { this.updateWiring(wiring, key); }} />
+          <button onClick={() => {this.removeWiring(key);}}>Remove</button>
         </li>
       );
     });
@@ -37,20 +40,31 @@ export default React.createClass({
     );
   },
   addWiring: function () {
-    this.setState(function(previousState, currentProps) {
-      if(previousState.wirings.length < PLUGBOARD_MAX_SIZE) {
-        let wirings = previousState.wirings;
-        wirings.push({
-          initialLeftPlug: '',
-          initialRightPlug: ''
-        });
-        return {wirings: wirings};
+    this.setState((previousState, currentProps) => {
+      let keys = Object.keys(previousState.wirings);
+      if(keys.length < PLUGBOARD_MAX_SIZE) {
+        let newKey = this.getNewWiringKey();
+        previousState.wirings[newKey] = {
+          leftPlug: '',
+          rightPlug: ''
+        };
+        return {wirings: previousState.wirings};
       }
     });
   },
   removeWiring: function (index) {
-    this.setState((previousState) => {
-      previousState.wirings.splice(index, 1);
+    this.setState(function(previousState) {
+      delete previousState.wirings[index];
+      return {
+        wirings: previousState.wirings
+      };
+    });
+  },
+  updateWiring: function (wiring, index) {
+
+    this.setState(function (previousState) {
+      previousState.wirings[index].leftPlug = wiring.leftPlug;
+      previousState.wirings[index].rightPlug = wiring.rightPlug;
       return {
         wirings: previousState.wirings
       };

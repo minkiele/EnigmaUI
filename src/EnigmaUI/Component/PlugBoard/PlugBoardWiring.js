@@ -10,8 +10,11 @@ export default React.createClass({
   setPlug: function (prop, evt) {
     let mutatedState = {};
     mutatedState[prop] = evt.target.value;
-    this.setState(mutatedState, function () {
-      console.log('DO SOMETHING');
+    this.setState(mutatedState, () => {
+      this.props.updateWiring({
+          leftPlug: this.state.leftPlug,
+          rightPlug: this.state.rightPlug
+      });
     });
   },
   setLeftPlug: function (evt) {
