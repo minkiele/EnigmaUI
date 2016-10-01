@@ -7,7 +7,7 @@ export default React.createClass({
     return [{
       value: 'BETA',
       label: 'Beta'
-    },{
+    }, {
       value: 'GAMMA',
       label: 'Gamma'
     }];

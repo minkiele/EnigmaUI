@@ -3,10 +3,14 @@ import React from 'react';
 export const INITIAL_REFLECTOR_TYPE = '';
 
 export default React.createClass({
-
+  getDefaultProps: function () {
+    return {
+      type: INITIAL_REFLECTOR_TYPE
+    };
+  },
   getInitialState: function () {
     return {
-      type: this.props.type || INITIAL_REFLECTOR_TYPE
+      type: this.props.type
     };
   },
   renderChoices: function () {
@@ -22,7 +26,7 @@ export default React.createClass({
     return options;
   },
   updateType: function (evt) {
-    this.updateState({
+    this.setState({
       type: evt.target.value
     });
   },

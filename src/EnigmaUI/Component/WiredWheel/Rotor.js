@@ -6,7 +6,11 @@ export const INITIAL_RING_POSITION = 0;
 export const INITIAL_WINDOW_POSITION = 0;
 
 export default React.createClass({
-
+  getDefaultProps: function () {
+    return {
+      type: INITIAL_ROTOR_TYPE
+    };
+  },
   getInitialState: function () {
     return {
       type: this.props.type || INITIAL_ROTOR_TYPE,
@@ -16,7 +20,6 @@ export default React.createClass({
   },
   getRingPositions: function () {
     let options = [];
-    let initialIndex = 'A'.charCodeAt(0);
     for(let i = 0; i < 26; i += 1){
       let label = `${getLetter(i)} - ${i + 1}`;
       options.push(
@@ -40,23 +43,24 @@ export default React.createClass({
     return options;
   },
   updateType: function (evt) {
-    this.updateState({
+    this.setState({
       type: evt.target.value
     });
   },
   updateRingPosition: function (evt) {
-    this.updateState(
+    this.setState({
       ringPosition: evt.target.value
-    );
+    });
   },
   updateWindowPosition: function (evt) {
-    this.updateState(
+    this.setState({
       windowPosition: evt.target.value
-    );
+    });
   },
   render: function () {
     let choices = this.renderChoices();
     let ringPositions = this.getRingPositions();
+    let windowPosition = getLetter(this.state.windowPosition);
     return (
       <div className="enigmaRotor">
         <div className="enigmaRotorType">
@@ -75,7 +79,7 @@ export default React.createClass({
         </div>
         <div className="enigmaRotorWindowPosition">
           <label>Window Position</label>
-          <input type="text" value={this.state.windowPosition} onChange={this.updateRingPosition}/>
+          <input type="text" value={windowPosition} onChange={this.updateRingPosition}/>
         </div>
       </div>
     );

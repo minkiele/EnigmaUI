@@ -6,10 +6,10 @@ export default React.createClass({
   getReflectorTypes: function () {
     return [{
       value: 'THINB',
-      label: 'B'
-    },{
+      label: 'Thin B'
+    }, {
       value: 'THINC',
-      label: 'C'
+      label: 'Thin C'
     }];
   },
 

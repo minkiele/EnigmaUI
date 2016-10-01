@@ -5,11 +5,20 @@ export default React.createClass({
 
   getReflectorTypes: function () {
     return [{
+      value: 'A',
+      label: 'B'
+    }, {
       value: 'B',
       label: 'B'
-    },{
+    }, {
       value: 'C',
       label: 'C'
+    }, {
+      value: 'BETA',
+      label: 'Beta'
+    }, {
+      value: 'GAMMA',
+      label: 'Gamma'
     }];
   },
 
