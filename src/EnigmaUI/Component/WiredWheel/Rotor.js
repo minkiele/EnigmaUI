@@ -1,4 +1,5 @@
 import React from 'react';
+import {getLetter} from 'enigma-minkiele/src/Utils';
 
 export const INITIAL_ROTOR_TYPE = '';
 export const INITIAL_RING_POSITION = 0;
@@ -17,8 +18,7 @@ export default React.createClass({
     let options = [];
     let initialIndex = 'A'.charCodeAt(0);
     for(let i = 0; i < 26; i += 1){
-      let letter = String.fromCharCode(initialIndex + i);
-      let label = `${letter} - ${i + 1}`;
+      let label = `${getLetter(i)} - ${i + 1}`;
       options.push(
         <option key={i} value={i}>{label}</option>
       );
