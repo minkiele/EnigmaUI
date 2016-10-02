@@ -1,34 +1,24 @@
 import React from 'react';
 import Reflector from '../Reflector';
-import ReflectorA from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorA';
-import ReflectorB from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorB';
-import ReflectorC from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorC';
-import ReflectorBeta from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorBeta';
-import ReflectorGamma from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorGamma';
 
 export default React.createClass({
 
   getReflectorTypes: function () {
     return [{
       value: 'A',
-      label: 'A',
-      reflector: new ReflectorA()
+      label: 'A'
     }, {
       value: 'B',
-      label: 'B',
-      reflector: new ReflectorB()
+      label: 'B'
     }, {
       value: 'C',
-      label: 'C',
-      reflector: new ReflectorC()
+      label: 'C'
     }, {
       value: 'BETA',
-      label: 'Beta',
-      reflector: new ReflectorBeta()
+      label: 'Beta'
     }, {
       value: 'GAMMA',
-      label: 'Gamma',
-      reflector: new ReflectorGamma()
+      label: 'Gamma'
     }];
   },
 

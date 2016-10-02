@@ -1,11 +1,33 @@
 import React from 'react';
-import Enigma from 'enigma-minkiele/src/Enigma';
-import EnigmaM4 from 'enigma-minkiele/src/EnigmaM4';
 import EnigmaPlugBoard from './Component/PlugBoard';
 import Rotor from './Component/WiredWheel/Rotor/Rotor';
 import Reflector from './Component/WiredWheel/Reflector/Reflector';
 import ThinRotor from './Component/WiredWheel/Rotor/ThinRotor';
 import ThinReflector from './Component/WiredWheel/Reflector/ThinReflector';
+
+import Enigma from 'enigma-minkiele/src/Enigma';
+import EnigmaM4 from 'enigma-minkiele/src/EnigmaM4';
+import RotorI from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorI';
+import RotorII from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorII';
+import RotorIII from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorIII';
+import RotorIV from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorIV';
+import RotorV from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorV';
+import RotorVI from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorVI';
+import RotorVII from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorVII';
+import RotorVIII from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorVIII';
+
+import ThinRotorBeta from 'enigma-minkiele/src/Component/WiredWheel/Rotor/ThinRotor/ThinRotorBeta';
+import ThinRotorGamma from 'enigma-minkiele/src/Component/WiredWheel/Rotor/ThinRotor/ThinRotorGamma';
+
+import ReflectorA from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorA';
+import ReflectorB from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorB';
+import ReflectorC from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorC';
+import ReflectorBeta from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorBeta';
+import ReflectorGamma from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorGamma';
+
+import ThinReflectorB from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ThinReflector/ThinReflectorB';
+import ThinReflectorC from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ThinReflector/ThinReflectorC';
+
 
 export const TYPE_M3 = 'M3';
 export const TYPE_M4 = 'M4';
@@ -40,7 +62,57 @@ export default React.createClass({
     console.log(config);
   },
   setRotorConfiguration: function (config, rotor) {
-    console.log(config, rotor);
+    this.setState((previousState) => {
+      let newState = {
+        machine: previousState.machine,
+      };
+
+      let currentRotor;
+
+      if(previousState[rotor] !== config.type) {
+        switch(config.type) {
+          case 'I':
+            currentRotor = new RotorI();
+            break;
+          case 'II':
+            currentRotor = new RotorII();
+            break;
+          case 'III':
+            currentRotor = new RotorIII();
+            break;
+          case 'IV':
+            currentRotor = new RotorIV();
+            break;
+          case 'V':
+            currentRotor = new RotorV();
+            break;
+          case 'VI':
+            currentRotor = new RotorVI();
+            break;
+          case 'VII':
+            currentRotor = new RotorVII();
+            break;
+          case 'VIII':
+            currentRotor = new RotorVIII();
+            break;
+        }
+
+        newState.machine.setRotor(currentRotor, rotor);
+        newState[rotor] = config.type;
+
+      } else {
+        currentRotor = previousState.machine.getRotor(rotor);
+      }
+
+      currentRotor.setRingPosition(config.ringPosition);
+      newState[`${rotor}-ringPosition`] = config.ringPosition;
+
+      newState.machine.setRotorWindowLetter(config.windowLetter, rotor);
+      newState[`${rotor}-windowLetter`] = config.windowLetter;
+
+      return newState;
+
+    });
   },
   setPlugBoardConfiguration: function (config) {
     console.log(config);
