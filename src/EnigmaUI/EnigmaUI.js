@@ -1,9 +1,10 @@
 import React from 'react';
-import EnigmaPlugBoard from './Component/PlugBoard';
+import PlugBoard from './Component/PlugBoard';
 import Rotor from './Component/WiredWheel/Rotor/Rotor';
 import Reflector from './Component/WiredWheel/Reflector/Reflector';
 import ThinRotor from './Component/WiredWheel/Rotor/ThinRotor';
 import ThinReflector from './Component/WiredWheel/Reflector/ThinReflector';
+import Keyboard from './Component/Keyboard';
 
 import Enigma from 'enigma-minkiele/src/Enigma';
 import EnigmaM4 from 'enigma-minkiele/src/EnigmaM4';
@@ -59,10 +60,53 @@ export default React.createClass({
 
   },
   setReflectorConfiguration: function (config) {
-    console.log(config);
+    this.setState((previousState) => {
+
+      let newState = {
+        machine: previousState.machine,
+      };
+
+      let currentReflector;
+
+      if(previousState.reflector !== config.type) {
+        switch(config.type) {
+          case 'A':
+            currentReflector = new ReflectorA();
+            break;
+          case 'B':
+            currentReflector = new ReflectorB();
+            break;
+          case 'C':
+            currentReflector = new ReflectorC();
+            break;
+          case 'BETA':
+            currentReflector = new ReflectorBeta();
+            break;
+          case 'GAMMA':
+            currentReflector = new ReflectorGamma();
+            break;
+          case 'THINB':
+            currentReflector = new ThinReflectorB();
+            break;
+          case 'THINC':
+            currentReflector = new ThinReflectorC();
+            break;
+        }
+      }
+
+      if(!!currentReflector) {
+        newState.reflector = currentReflector;
+        newState.machine.setReflector(currentReflector);
+        newState.reflector = config.type;
+      }
+
+      return newState;
+
+    });
   },
   setRotorConfiguration: function (config, rotor) {
     this.setState((previousState) => {
+
       let newState = {
         machine: previousState.machine,
       };
@@ -95,6 +139,12 @@ export default React.createClass({
           case 'VIII':
             currentRotor = new RotorVIII();
             break;
+          case 'BETA':
+            currentRotor = new ThinRotorBeta();
+            break;
+          case 'GAMMA':
+            currentRotor = new ThinRotorGamma();
+            break;
         }
 
         newState.machine.setRotor(currentRotor, rotor);
@@ -104,11 +154,14 @@ export default React.createClass({
         currentRotor = previousState.machine.getRotor(rotor);
       }
 
-      currentRotor.setRingPosition(config.ringPosition);
-      newState[`${rotor}-ringPosition`] = config.ringPosition;
+      if(!!currentRotor) {
 
-      newState.machine.setRotorWindowLetter(config.windowLetter, rotor);
-      newState[`${rotor}-windowLetter`] = config.windowLetter;
+        currentRotor.setRingPosition(config.ringPosition);
+        newState[`${rotor}-ringPosition`] = config.ringPosition;
+
+        newState.machine.setRotorWindowLetter(config.windowLetter, rotor);
+        newState[`${rotor}-windowLetter`] = config.windowLetter;
+      }
 
       return newState;
 
@@ -178,7 +231,8 @@ export default React.createClass({
             <Rotor updateRotor={(config) => { this.setRotorConfiguration(config, EnigmaM4.RIGHT_ROTOR); }} />
           </div>
         </div>
-        <EnigmaPlugBoard updatePlugBoard={this.setPlugBoardConfiguration} />
+        <PlugBoard updatePlugBoard={this.setPlugBoardConfiguration} />
+        <Keyboard enigma={this.state.machine} updateWindowLetters={this.updateWindowLetters} />
       </div>
     );
   }

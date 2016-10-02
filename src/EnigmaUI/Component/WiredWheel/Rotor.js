@@ -13,7 +13,7 @@ export default React.createClass({
   },
   getInitialState: function () {
     return {
-      type: this.props.type || INITIAL_ROTOR_TYPE,
+      type: this.props.type,
       ringPosition: INITIAL_RING_POSITION,
       windowLetter: INITIAL_WINDOW_POSITION
     };
@@ -44,7 +44,9 @@ export default React.createClass({
   },
   updateType: function (evt) {
     this.setState({
-      type: evt.target.value
+      type: evt.target.value,
+      ringPosition: INITIAL_RING_POSITION,
+      windowLetter: INITIAL_WINDOW_POSITION
     }, () => {
       this.props.updateRotor(this.state);
     });
@@ -84,7 +86,7 @@ export default React.createClass({
         </div>
         <div className="enigmaRotorWindowLetter">
           <label>Window Position</label>
-          <input type="text" value={this.state.windowLetter} onChange={this.updateWindowLetter} maxLength="1" pattern="[A-Z]" />
+          <input type="text" value={this.state.windowLetter} onChange={this.updateWindowLetter} maxLength="1" pattern="[A-Z]" size="2" />
         </div>
       </div>
     );
