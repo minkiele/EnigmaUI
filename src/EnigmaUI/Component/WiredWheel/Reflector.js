@@ -28,6 +28,8 @@ export default React.createClass({
   updateType: function (evt) {
     this.setState({
       type: evt.target.value
+    }, () => {
+      this.props.updateReflector(this.state);
     });
   },
   render: function () {

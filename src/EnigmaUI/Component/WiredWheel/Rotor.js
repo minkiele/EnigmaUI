@@ -1,5 +1,5 @@
 import React from 'react';
-import {getLetter} from 'enigma-minkiele/src/Utils';
+import * as Utils from 'enigma-minkiele/src/Utils';
 
 export const INITIAL_ROTOR_TYPE = '';
 export const INITIAL_RING_POSITION = 0;
@@ -21,7 +21,7 @@ export default React.createClass({
   getRingPositions: function () {
     let options = [];
     for(let i = 0; i < 26; i += 1){
-      let label = `${getLetter(i)} - ${i + 1}`;
+      let label = `${Utils.getLetter(i)} - ${i + 1}`;
       options.push(
         <option key={i} value={i}>{label}</option>
       );
@@ -45,22 +45,27 @@ export default React.createClass({
   updateType: function (evt) {
     this.setState({
       type: evt.target.value
+    }, () => {
+      this.props.updateRotor(this.state);
     });
   },
   updateRingPosition: function (evt) {
     this.setState({
       ringPosition: evt.target.value
+    }, () => {
+      this.props.updateRotor(this.state);
     });
   },
   updateWindowPosition: function (evt) {
     this.setState({
-      windowPosition: evt.target.value
+      windowPosition: Utils.getIndex(Utils.normalizeInput(evt.target.value))
+    }, () => {
+      this.props.updateRotor(this.state);
     });
   },
   render: function () {
     let choices = this.renderChoices();
     let ringPositions = this.getRingPositions();
-    let windowPosition = getLetter(this.state.windowPosition);
     return (
       <div className="enigmaRotor">
         <div className="enigmaRotorType">
@@ -79,7 +84,7 @@ export default React.createClass({
         </div>
         <div className="enigmaRotorWindowPosition">
           <label>Window Position</label>
-          <input type="text" value={windowPosition} onChange={this.updateRingPosition}/>
+          <input type="text" value={Utils.getLetter(this.state.windowPosition)} onChange={this.updateWindowPosition}/>
         </div>
       </div>
     );
