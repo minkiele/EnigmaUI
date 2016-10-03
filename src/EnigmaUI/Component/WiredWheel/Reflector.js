@@ -2,18 +2,16 @@ import React from 'react';
 
 export const INITIAL_REFLECTOR_TYPE = '';
 
-export default React.createClass({
-  getDefaultProps: function () {
-    return {
-      type: INITIAL_REFLECTOR_TYPE
-    };
-  },
-  getInitialState: function () {
-    return {
+export default class Reflector extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
       type: this.props.type
     };
-  },
-  renderChoices: function () {
+    this.updateType = this.updateType.bind(this);
+  }
+  renderChoices () {
     var options = [];
     for(var i = 0; i < this.props.choices.length; i += 1) {
       let choice = this.props.choices[i];
@@ -24,15 +22,15 @@ export default React.createClass({
       );
     }
     return options;
-  },
-  updateType: function (evt) {
+  }
+  updateType (evt) {
     this.setState({
       type: evt.target.value
     }, () => {
       this.props.updateReflector(this.state);
     });
-  },
-  render: function () {
+  }
+  render () {
     let choices = this.renderChoices();
     return (
       <div className="enigmaReflector">
@@ -46,4 +44,8 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+Reflector.defaultProps = {
+  type: INITIAL_REFLECTOR_TYPE
+};

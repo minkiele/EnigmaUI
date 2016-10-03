@@ -1,29 +1,24 @@
 import React from 'react';
-import Reflector from '../Reflector';
+import AbstractReflector from '../Reflector';
+import assign from 'object-assign';
 
-export default React.createClass({
+export default class Reflector extends AbstractReflector {}
 
-  getReflectorTypes: function () {
-    return [{
-      value: 'A',
-      label: 'A'
-    }, {
-      value: 'B',
-      label: 'B'
-    }, {
-      value: 'C',
-      label: 'C'
-    }, {
-      value: 'BETA',
-      label: 'Beta'
-    }, {
-      value: 'GAMMA',
-      label: 'Gamma'
-    }];
-  },
-
-  render: function () {
-    let reflectorTypes = this.getReflectorTypes();
-    return <Reflector {...this.props} choices={reflectorTypes}/>;
-  }
+Reflector.defaultProps = assign({}, AbstractReflector.defaultProps, {
+  choices: [{
+    value: 'A',
+    label: 'A'
+  }, {
+    value: 'B',
+    label: 'B'
+  }, {
+    value: 'C',
+    label: 'C'
+  }, {
+    value: 'BETA',
+    label: 'Beta'
+  }, {
+    value: 'GAMMA',
+    label: 'Gamma'
+  }]
 });

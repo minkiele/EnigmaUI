@@ -1,30 +1,28 @@
 import React from 'react';
-import EnigmaPlugBoardWiring from './PlugBoard/PlugBoardWiring';
+import PlugBoardWiring from './PlugBoard/PlugBoardWiring';
 
 export const PLUGBOARD_MAX_SIZE = 10;
 
-export default React.createClass({
-  getInitialState: function () {
-
-    let initialState = {
+export default class PlugBoard extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       wirings: {}
     };
-
-    return initialState;
-
-  },
-  getNewWiringKey: function () {
+    this.addWiring = this.addWiring.bind(this);
+  }
+  getNewWiringKey () {
     let now = new Date();
-    return `w${now.getTime()}{now.getMilliseconds()}`;
-  },
-  render: function () {
+    return `w${now.getTime()}${now.getMilliseconds()}`;
+  }
+  render () {
 
     let wirings = Object.keys(this.state.wirings).map((key) => {
       let wiring = this.state.wirings[key];
       return (
         <li key={key}>
-          <EnigmaPlugBoardWiring initialLeftPlug={wiring.leftPlug} initialRightPlug={wiring.rightPlug} updateWiring={(wiring) => { this.updateWiring(wiring, key); }} />
-          <button onClick={() => {this.removeWiring(key);}}>Remove</button>
+          <PlugBoardWiring initialLeftPlug={wiring.leftPlug} initialRightPlug={wiring.rightPlug} updateWiring={(wiring) => { this.updateWiring(wiring, key); }} />
+          <button onClick={() => { this.removeWiring(key); }}>Remove</button>
         </li>
       );
     });
@@ -38,8 +36,8 @@ export default React.createClass({
         </ol>
       </div>
     );
-  },
-  addWiring: function () {
+  }
+  addWiring () {
     this.setState((previousState, currentProps) => {
       let keys = Object.keys(previousState.wirings);
       if(keys.length < PLUGBOARD_MAX_SIZE) {
@@ -50,17 +48,21 @@ export default React.createClass({
         };
         return {wirings: previousState.wirings};
       }
+    }, () => {
+      this.props.updatePlugBoard(this.state.wirings);
     });
-  },
-  removeWiring: function (index) {
+  }
+  removeWiring (index) {
     this.setState(function(previousState) {
       delete previousState.wirings[index];
       return {
         wirings: previousState.wirings
       };
+    }, () => {
+      this.props.updatePlugBoard(this.state.wirings);
     });
-  },
-  updateWiring: function (wiring, index) {
+  }
+  updateWiring (wiring, index) {
 
     this.setState(function (previousState) {
       previousState.wirings[index].leftPlug = wiring.leftPlug;
@@ -68,9 +70,8 @@ export default React.createClass({
       return {
         wirings: previousState.wirings
       };
+    }, () => {
+      this.props.updatePlugBoard(this.state.wirings);
     });
-  },
-  componentDidMount: function () {
-    console.log('Do something');
   }
-});
+}

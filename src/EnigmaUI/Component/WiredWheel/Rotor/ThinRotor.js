@@ -1,20 +1,15 @@
 import React from 'react';
-import Rotor from '../Rotor';
+import AbstractRotor from '../Rotor';
+import assign from 'object-assign';
 
-export default React.createClass({
+export default class ThinRotor extends AbstractRotor {}
 
-  getRotorTypes: function () {
-    return [{
-      value: 'BETA',
-      label: 'Beta'
-    }, {
-      value: 'GAMMA',
-      label: 'Gamma'
-    }];
-  },
-
-  render: function () {
-    let rotorTypes = this.getRotorTypes();
-    return <Rotor {...this.props} choices={rotorTypes} />;
-  }
+ThinRotor.defaultProps = assign({}, AbstractRotor.defaultProps, {
+  choices: [{
+    value: 'BETA',
+    label: 'Beta'
+  }, {
+    value: 'GAMMA',
+    label: 'Gamma'
+  }]
 });

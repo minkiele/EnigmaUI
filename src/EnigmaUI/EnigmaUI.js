@@ -41,6 +41,12 @@ export default class EnigmaUI extends React.Component {
       type: TYPE_M3,
       machine: new Enigma()
     };
+
+    this.setReflectorConfiguration = this.setReflectorConfiguration.bind(this);
+    this.setEnigmaConfiguration = this.setEnigmaConfiguration.bind(this);
+    this.updateWindowLetters = this.updateWindowLetters.bind(this);
+    this.setPlugBoardConfiguration = this.setPlugBoardConfiguration.bind(this);
+
   }
   setEnigmaConfiguration (evt) {
 
@@ -158,8 +164,10 @@ export default class EnigmaUI extends React.Component {
 
       if(!!currentRotor) {
 
-        currentRotor.setRingPosition(config.ringPosition);
-        newState[`${rotor}-ringPosition`] = config.ringPosition;
+        let ringPosition = parseInt(config.ringPosition);
+
+        currentRotor.setRingPosition(ringPosition);
+        newState[`${rotor}-ringPosition`] = ringPosition;
 
         newState.machine.setRotorWindowLetter(config.windowLetter, rotor);
         newState[`${rotor}-windowLetter`] = config.windowLetter;
@@ -170,7 +178,25 @@ export default class EnigmaUI extends React.Component {
     });
   }
   setPlugBoardConfiguration (config) {
-    console.log(config);
+    this.setState((previousState) => {
+
+      let newState = {
+        machine: previousState.machine,
+      };
+
+      newState.machine.plugBoard.unplugAllWires();
+
+      Object.keys(config).forEach(function (key) {
+        try{
+          newState.machine.plugBoard.plugWire(config[key].leftPlug, config[key].rightPlug);
+        } catch (e) {
+          //Everything is ok
+        }
+      });
+
+      return newState;
+
+    });
   }
   renderEnigmaConfiguration () {
 
@@ -205,6 +231,9 @@ export default class EnigmaUI extends React.Component {
 
     return config;
 
+  }
+  updateWindowLetters () {
+    console.log('Should perform an update of the window positions');
   }
   render () {
 

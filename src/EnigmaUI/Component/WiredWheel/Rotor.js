@@ -13,6 +13,9 @@ export default class Rotor extends React.Component {
       ringPosition: INITIAL_RING_POSITION,
       windowLetter: INITIAL_WINDOW_POSITION
     };
+    this.updateType = this.updateType.bind(this);
+    this.updateRingPosition = this.updateRingPosition.bind(this);
+    this.updateWindowLetter = this.updateWindowLetter.bind(this);
   }
   getRingPositions () {
     let options = [];

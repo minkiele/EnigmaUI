@@ -1,20 +1,15 @@
 import React from 'react';
-import Reflector from '../Reflector';
+import AbstractReflector from '../Reflector';
+import assign from 'object-assign';
 
-export default React.createClass({
+export default class ThinReflector extends AbstractReflector {}
 
-  getReflectorTypes: function () {
-    return [{
-      value: 'THINB',
-      label: 'Thin B'
-    }, {
-      value: 'THINC',
-      label: 'Thin C'
-    }];
-  },
-
-  render: function () {
-    let reflectorTypes = this.getReflectorTypes();
-    return <Reflector {...this.props} choices={reflectorTypes}/>;
-  }
+ThinReflector.defaultProps = assign({}, AbstractReflector.defaultProps, {
+  choices: [{
+    value: 'THINB',
+    label: 'Thin B'
+  }, {
+    value: 'THINC',
+    label: 'Thin C'
+  }]
 });
