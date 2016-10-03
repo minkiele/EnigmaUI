@@ -1,13 +1,14 @@
 import React from 'react';
 
-export default React.createClass({
-  getInitialState: function () {
-    return {
+export default class PlugBoardWiring extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       leftPlug: this.props.initialLeftPlug,
       rightPlug: this.props.initialRightPlug
     };
-  },
-  setPlug: function (prop, evt) {
+  }
+  setPlug (prop, evt) {
     let mutatedState = {};
     mutatedState[prop] = evt.target.value;
     this.setState(mutatedState, () => {
@@ -16,14 +17,14 @@ export default React.createClass({
           rightPlug: this.state.rightPlug
       });
     });
-  },
-  setLeftPlug: function (evt) {
+  }
+  setLeftPlug (evt) {
     this.setPlug('leftPlug', evt);
-  },
-  setRightPlug: function (evt) {
+  }
+  setRightPlug (evt) {
     this.setPlug('rightPlug', evt);
-  },
-  renderAlphabet: function () {
+  }
+  renderAlphabet () {
     let alphabet = [];
     let aIndex = 'A'.charCodeAt(0);
     
@@ -32,8 +33,8 @@ export default React.createClass({
       alphabet.push(<option key={letter} value={letter}>{letter}</option>);
     }
     return alphabet;
-  },
-  render: function () {
+  }
+  render () {
     let plugAlphabet = this.renderAlphabet();
     // let rightPlugAlphabet = this.renderAlphabet();
 
@@ -50,4 +51,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}

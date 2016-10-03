@@ -33,14 +33,16 @@ import ThinReflectorC from 'enigma-minkiele/src/Component/WiredWheel/Reflector/T
 export const TYPE_M3 = 'M3';
 export const TYPE_M4 = 'M4';
 
-export default React.createClass({
-  getInitialState: function () {
-    return {
+export default class EnigmaUI extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
       type: TYPE_M3,
       machine: new Enigma()
     };
-  },
-  setEnigmaConfiguration: function (evt) {
+  }
+  setEnigmaConfiguration (evt) {
 
     let type = evt.target.value;
     let machine;
@@ -58,8 +60,8 @@ export default React.createClass({
       machine: machine
     });
 
-  },
-  setReflectorConfiguration: function (config) {
+  }
+  setReflectorConfiguration (config) {
     this.setState((previousState) => {
 
       let newState = {
@@ -103,8 +105,8 @@ export default React.createClass({
       return newState;
 
     });
-  },
-  setRotorConfiguration: function (config, rotor) {
+  }
+  setRotorConfiguration (config, rotor) {
     this.setState((previousState) => {
 
       let newState = {
@@ -166,11 +168,11 @@ export default React.createClass({
       return newState;
 
     });
-  },
-  setPlugBoardConfiguration: function (config) {
+  }
+  setPlugBoardConfiguration (config) {
     console.log(config);
-  },
-  renderEnigmaConfiguration: function () {
+  }
+  renderEnigmaConfiguration () {
 
     let config;
 
@@ -203,8 +205,8 @@ export default React.createClass({
 
     return config;
 
-  },
-  render: function () {
+  }
+  render () {
 
     return (
       <div className="enigmaUI">
@@ -236,4 +238,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}

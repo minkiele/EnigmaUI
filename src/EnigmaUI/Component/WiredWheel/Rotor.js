@@ -5,20 +5,16 @@ export const INITIAL_ROTOR_TYPE = '';
 export const INITIAL_RING_POSITION = 0;
 export const INITIAL_WINDOW_POSITION = 'A';
 
-export default React.createClass({
-  getDefaultProps: function () {
-    return {
-      type: INITIAL_ROTOR_TYPE
-    };
-  },
-  getInitialState: function () {
-    return {
+export default class Rotor extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       type: this.props.type,
       ringPosition: INITIAL_RING_POSITION,
       windowLetter: INITIAL_WINDOW_POSITION
     };
-  },
-  getRingPositions: function () {
+  }
+  getRingPositions () {
     let options = [];
     for(let i = 0; i < 26; i += 1){
       let label = `${Utils.getLetter(i)} - ${i + 1}`;
@@ -29,8 +25,8 @@ export default React.createClass({
 
     return options;
 
-  },
-  renderChoices: function () {
+  }
+  renderChoices () {
     var options = [];
     for(var i = 0; i < this.props.choices.length; i += 1) {
       let choice = this.props.choices[i];
@@ -41,8 +37,8 @@ export default React.createClass({
       );
     }
     return options;
-  },
-  updateType: function (evt) {
+  }
+  updateType (evt) {
     this.setState({
       type: evt.target.value,
       ringPosition: INITIAL_RING_POSITION,
@@ -50,22 +46,22 @@ export default React.createClass({
     }, () => {
       this.props.updateRotor(this.state);
     });
-  },
-  updateRingPosition: function (evt) {
+  }
+  updateRingPosition (evt) {
     this.setState({
       ringPosition: evt.target.value
     }, () => {
       this.props.updateRotor(this.state);
     });
-  },
-  updateWindowLetter: function (evt) {
+  }
+  updateWindowLetter (evt) {
     this.setState({
       windowLetter: Utils.normalizeInput(evt.target.value)
     }, () => {
       this.props.updateRotor(this.state);
     });
-  },
-  render: function () {
+  }
+  render () {
     let choices = this.renderChoices();
     let ringPositions = this.getRingPositions();
     return (
@@ -91,4 +87,8 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+Rotor.defaultProps = {
+  type: INITIAL_ROTOR_TYPE
+};
