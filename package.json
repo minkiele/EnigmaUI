@@ -17,10 +17,17 @@
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
+    "browser-sync": "^2.17.0",
     "enigma-minkiele": "github:minkiele/Enigma",
+    "gulp": "^3.9.1",
+    "gulp-util": "^3.0.7",
     "object-assign": "^4.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "webpack": "^1.13.2"
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-middleware": "^1.8.3",
+    "webpack-hot-middleware": "^2.12.2",
+    "webpack-module-hot-accept": "^1.0.4"
   }
 }
