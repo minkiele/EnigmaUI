@@ -190,6 +190,8 @@ export default class EnigmaUI extends React.Component {
         try{
           newState.machine.plugBoard.plugWire(config[key].leftPlug, config[key].rightPlug);
         } catch (e) {
+          //What?
+          console.error(e);
           //Everything is ok
         }
       });
