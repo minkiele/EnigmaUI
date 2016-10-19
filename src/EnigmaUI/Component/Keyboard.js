@@ -31,19 +31,26 @@ export default class Keyboard extends React.Component {
       //Do nothing
     }
   }
+  getGroupedLetters (letters) {
+    let output = '';
+    for(let i = 0; i < letters.length; i += 4) {
+      output += `${letters.substring(i, Math.min(i + 4, letters.length - 1))} `;
+    }
+    return output.trim();
+  }
   render () {
     return (
       <div className="keyboard">
         <h2>Keyboard</h2>
         <div className="keyboardInput">
           <code>
-            {this.state.input}
+            {this.getGroupedLetters(this.state.input)}
           </code>
-          <input type="text" value={this.state.inputLetter} onChange={this.updateInput} maxLength="1" pattern="[A-Z]" size="2" />
+          <input className="form-control" type="text" value={this.state.inputLetter} onChange={this.updateInput} maxLength="1" pattern="[A-Z]" size="2" />
         </div>
         <div className="keyboardOutput">
           <code>
-            {this.state.output}
+            {this.getGroupedLetters(this.state.output)}
           </code>
         </div>
       </div>

@@ -244,7 +244,7 @@ export default class EnigmaUI extends React.Component {
         <h1>EnigmaUI</h1>
         <div className="enigmaType">
           <label>Type</label>
-          <select value={this.state.type} onChange={this.setEnigmaConfiguration}>
+          <select className="form-control" value={this.state.type} onChange={this.setEnigmaConfiguration}>
             <option value={TYPE_M3}>Enigma M3</option>
             <option value={TYPE_M4}>Enigma M4</option>
           </select>

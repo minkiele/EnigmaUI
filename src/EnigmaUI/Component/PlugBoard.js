@@ -22,7 +22,7 @@ export default class PlugBoard extends React.Component {
       return (
         <li key={key}>
           <PlugBoardWiring initialLeftPlug={wiring.leftPlug} initialRightPlug={wiring.rightPlug} updateWiring={(wiring) => { this.updateWiring(wiring, key); }} />
-          <button onClick={() => { this.removeWiring(key); }}>Remove</button>
+          <button className="btn btn-danger" onClick={() => { this.removeWiring(key); }}>Remove</button>
         </li>
       );
     });
@@ -30,7 +30,7 @@ export default class PlugBoard extends React.Component {
     return (
       <div className="enigmaPlugBoard">
         <h2>PlugBoard</h2>
-        <button onClick={this.addWiring}>Add wiring</button>
+        <button className="btn btn-primary" onClick={this.addWiring}>Add wiring</button>
         <ol className="enigmaPlugBoardWirings">
           {wirings}
         </ol>

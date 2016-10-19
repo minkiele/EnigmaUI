@@ -36,7 +36,7 @@ export default class Reflector extends React.Component {
       <div className="enigmaReflector">
         <div className="enigmaReflectorType">
           <label>Type</label>
-          <select value={this.state.type} onChange={this.updateType}>
+          <select className="form-control" value={this.state.type} onChange={this.updateType}>
             <option value="">Choose a reflector</option>
             {choices}
           </select>

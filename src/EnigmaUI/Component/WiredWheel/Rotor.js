@@ -71,21 +71,21 @@ export default class Rotor extends React.Component {
       <div className="enigmaRotor">
         <div className="enigmaRotorType">
           <label>Type</label>
-          <select value={this.state.type} onChange={this.updateType}>
+          <select className="form-control" value={this.state.type} onChange={this.updateType}>
             <option value="">Choose a rotor</option>
             {choices}
           </select>
         </div>
         <div className="enigmaRotorRingPosition">
           <label>Ring Position</label>
-          <select value={this.state.ringPosition} onChange={this.updateRingPosition}>
+          <select className="form-control" value={this.state.ringPosition} onChange={this.updateRingPosition}>
             <option value="">Choose a ring position</option>
             {ringPositions}
           </select>
         </div>
         <div className="enigmaRotorWindowLetter">
           <label>Window Position</label>
-          <input type="text" value={this.state.windowLetter} onChange={this.updateWindowLetter} maxLength="1" pattern="[A-Z]" size="2" />
+          <input className="form-control" type="text" value={this.state.windowLetter} onChange={this.updateWindowLetter} maxLength="1" pattern="[A-Z]" size="2" />
         </div>
       </div>
     );

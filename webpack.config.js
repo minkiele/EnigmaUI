@@ -18,6 +18,10 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    //Se necesita plugin otherwise bootstrap won't load
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery'
+    })
   ],
   module: {
     loaders: [{

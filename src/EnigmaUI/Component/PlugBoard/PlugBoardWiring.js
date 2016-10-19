@@ -40,11 +40,11 @@ export default class PlugBoardWiring extends React.Component {
     let plugAlphabet = this.renderAlphabet();
     return (
       <div className="enigmaPlugBoardWiring">
-        <select value={this.state.leftPlug} onChange={this.setLeftPlug}>
+        <select className="form-control" value={this.state.leftPlug} onChange={this.setLeftPlug}>
           <option value=""></option>
           {plugAlphabet}
         </select>
-        <select value={this.state.rightPlug} onChange={this.setRightPlug}>
+        <select className="form-control" value={this.state.rightPlug} onChange={this.setRightPlug}>
           <option value=""></option>
           {plugAlphabet}
         </select>
