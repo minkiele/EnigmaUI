@@ -5,50 +5,49 @@ export default class PlugBoardWiring extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      leftPlug: this.props.initialLeftPlug,
-      rightPlug: this.props.initialRightPlug
+      wiring: this.props.wiring
     };
-    this.setLeftPlug = this.setLeftPlug.bind(this);
-    this.setRightPlug = this.setRightPlug.bind(this);
   }
-  setPlug (prop, evt) {
-    let mutatedState = {};
-    mutatedState[prop] = evt.target.value;
-    this.setState(mutatedState, () => {
-      this.props.updateWiring({
-          leftPlug: this.state.leftPlug,
-          rightPlug: this.state.rightPlug
-      });
+
+  updatePlug (value, key) {
+    this.setState(function (previousState) {
+      previousState.wiring[key] = value;
+      return previousState;
+    }, () => {
+      if(this.isWiringComplete()){
+        this.props.eventManager.emit('change.plugBoard.updateWiring', this.state.wiring, this.props.key);
+      }
     });
   }
-  setLeftPlug (evt) {
-    this.setPlug('leftPlug', evt);
-  }
-  setRightPlug (evt) {
-    this.setPlug('rightPlug', evt);
-  }
+
   renderAlphabet () {
     let alphabet = [];
 
     for(let i = 0; i < 26; i += 1) {
       let letter = getLetter(i);
-      alphabet.push(<option key={letter} value={letter}>{letter}</option>);
+      alphabet.push(<option key={letter.toString()} value={letter}>{letter}</option>);
     }
     return alphabet;
   }
+
+  isWiringComplete (wiring) {
+    return wiring[0].length > 0 && wiring[1].length > 0;
+  }
+
   render () {
     let plugAlphabet = this.renderAlphabet();
     return (
       <div className="enigmaPlugBoardWiring">
-        <select className="form-control" value={this.state.leftPlug} onChange={this.setLeftPlug}>
+        <select className="form-control" value={this.state.wiring[0]} onChange={(evt) => { this.updatePlug(evt.target.value, 0); }}>
           <option value=""></option>
           {plugAlphabet}
         </select>
-        <select className="form-control" value={this.state.rightPlug} onChange={this.setRightPlug}>
+        <select className="form-control" value={this.state.wiring[1]} onChange={(evt) => { this.updatePlug(evt.target.value, 1); }}>
           <option value=""></option>
           {plugAlphabet}
         </select>
       </div>
     );
   }
+
 }
