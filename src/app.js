@@ -1,9 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import EnigmaUI from './EnigmaUI/EnigmaUI';
+import EnigmaApp from './Enigma/Enigma';
 
 //Bootstrapping jQuery and Bootstrap
 import "jquery";
 import "bootstrap";
 
-ReactDOM.render(<EnigmaUI/>, document.getElementById('app'));
+let enigmaApp = new EnigmaApp(document.getElementById('app'));
