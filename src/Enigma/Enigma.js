@@ -30,6 +30,8 @@ import * as Const from './Constants';
 
 import EnigmaUI from './UI/Enigma';
 
+import {getTimestampKey as getNewWiringKey} from './Utils';
+
 export default class Enigma {
 
   constructor (container) {
@@ -64,6 +66,37 @@ export default class Enigma {
       this.render();
     });
 
+    this.eventManager.on('change.plugBoard.wiringRemoved', (wiring) => {
+      try {
+        this.enigma.plugBoard.unplugWire(wiring[0], wiring[1]);
+        this.render();
+      } catch (err) {
+        //Silently accept the situation
+      }
+    });
+
+    this.eventManager.on('change.plugBoard.wiringUpdated', (previousWiring, newWiring) => {
+
+      let render = false;
+
+      try {
+        this.enigma.plugBoard.unplugWire(previousWiring[0], newWiring[1]);
+        render = true;
+      } catch (err) {
+        //Keep calm and carry on
+      }
+      try {
+        this.enigma.plugBoard.plugWire(newWiring[0], newWiring[1]);
+        render = true;
+      } catch (err) {
+        //Silently accept the situation
+      }
+
+      if(render) {
+        this.render();
+      }
+
+    });
 
   }
 
@@ -244,6 +277,18 @@ export default class Enigma {
     }
   }
 
+  getPlugBoardWirings () {
+
+    let wirings = {};
+
+    this.enigma.plugBoard.wirings.forEach(function (wiring) {
+      wirings[getNewWiringKey()] = wiring;
+    });
+
+    return wirings;
+
+  }
+
   render () {
     ReactDOM.render(<EnigmaUI
       type={this.getType()}
@@ -252,6 +297,7 @@ export default class Enigma {
       leftRotor={this.getRotorProps(Const.LEFT_ROTOR)}
       centerRotor={this.getRotorProps(Const.CENTER_ROTOR)}
       rightRotor={this.getRotorProps(Const.RIGHT_ROTOR)}
+      plugBoardWirings={this.getPlugBoardWirings()}
       eventManager={this.eventManager}
     />, this.container);
   }

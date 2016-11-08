@@ -87,7 +87,7 @@ export default class Enigma extends React.Component {
             <Rotor {...this.props.rightRotor} position={RIGHT_ROTOR} eventManager={this.props.eventManager} />
           </div>
         </div>
-        <PlugBoard eventManager={this.props.eventManager} />
+        <PlugBoard wirings={this.props.plugBoardWirings} eventManager={this.props.eventManager} />
         <Keyboard eventManager={this.props.eventManager} />
       </div>
     );
@@ -101,6 +101,7 @@ Enigma.propTypes = {
   leftRotor: React.PropTypes.object,
   centerRotor: React.PropTypes.object,
   rightRotor: React.PropTypes.object,
+  plugBoardWirings: React.PropTypes.object,
   eventManager: React.PropTypes.instanceOf(EventEmitter).isRequired
 };
 

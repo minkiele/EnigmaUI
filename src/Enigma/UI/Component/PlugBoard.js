@@ -1,15 +1,27 @@
 import React from 'react';
 import EventEmitter from 'events';
 import PlugBoardWiring from './PlugBoard/PlugBoardWiring';
+import assign from 'object-assign';
+import {getTimestampKey as getNewWiringKey} from '../../Utils';
 
 export const PLUGBOARD_MAX_SIZE = 10;
 
 export default class PlugBoard extends React.Component {
+
   constructor (props) {
     super(props);
     this.state = {
-      wirings: this.props.wirings
+      //Shallow copy of the prop
+      wirings: assign({}, this.props.wirings)
     };
+  }
+
+  //Need this because it won't receive the updated properties
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      //Again, shallow copy of the props
+      wirings: assign({}, nextProps.wirings)
+    });
   }
 
   addWiring () {
@@ -19,7 +31,7 @@ export default class PlugBoard extends React.Component {
 
       if(keys.length < PLUGBOARD_MAX_SIZE) {
 
-        let newKey = keys.length.toString();
+        let newKey = getNewWiringKey();
         previousState.wirings[newKey] = ['', ''];
         return {wirings: previousState.wirings};
 
@@ -28,13 +40,17 @@ export default class PlugBoard extends React.Component {
   }
 
   removeWiring (key) {
+
+    let toBeRemovedWiring;
+
     this.setState(function(previousState) {
+      toBeRemovedWiring = previousState.wirings[key];
       delete previousState.wirings[key];
       return {
         wirings: previousState.wirings
       };
     }, () => {
-      this.props.eventManager.emit('change.plugBoard.removeWiring', key);
+      this.props.eventManager.emit('change.plugBoard.wiringRemoved', toBeRemovedWiring);
     });
   }
 
@@ -44,7 +60,7 @@ export default class PlugBoard extends React.Component {
       let wiring = this.state.wirings[key];
       return (
         <li key={key}>
-          <PlugBoardWiring wiring={wiring} index={key} />
+          <PlugBoardWiring wiring={wiring} index={key} eventManager={this.props.eventManager} />
           <button className="btn btn-danger" onClick={() => { this.removeWiring(key); }}>Remove</button>
         </li>
       );
