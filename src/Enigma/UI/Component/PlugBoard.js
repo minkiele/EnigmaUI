@@ -69,10 +69,10 @@ export default class PlugBoard extends React.Component {
     return (
       <div className="enigmaPlugBoard">
         <h2>PlugBoard</h2>
-        <button className="btn btn-primary" onClick={() => { this.addWiring(); }}>Add wiring</button>
         <ol className="enigmaPlugBoardWirings">
           {wirings}
         </ol>
+        <button className="btn btn-primary" onClick={() => { this.addWiring(); }}>Add wiring</button>
       </div>
     );
   }
