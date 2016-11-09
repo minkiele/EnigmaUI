@@ -82,7 +82,7 @@ export default class Enigma {
       let render = false;
 
       try {
-        this.enigma.plugBoard.unplugWire(previousWiring[0], newWiring[1]);
+        this.enigma.plugBoard.unplugWire(previousWiring[0], previousWiring[1]);
         render = true;
       } catch (err) {
         //Keep calm and carry on
