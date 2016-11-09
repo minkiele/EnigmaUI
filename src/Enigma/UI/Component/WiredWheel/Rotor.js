@@ -16,6 +16,11 @@ export default class Rotor extends React.Component {
       windowLetter: this.props.windowLetter
     };
   }
+
+  componentWillReceiveProps (nextProps) {
+    this.setState(nextProps);
+  }
+
   getRingPositions () {
     let options = [];
     for(let i = 0; i < 26; i += 1){

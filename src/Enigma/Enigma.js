@@ -39,6 +39,8 @@ export default class Enigma {
     this.container = container;
     this.eventManager = new EventEmitter();
     this.setType(Const.DEFAULT_TYPE);
+    this.setLastEncodedLetter('');
+
     this.render();
 
     this.eventManager.on('change.type', (type) => {
@@ -96,6 +98,15 @@ export default class Enigma {
         this.render();
       }
 
+    });
+
+    this.eventManager.on('change.keyboard.input', (input) => {
+      try {
+        this.setLastEncodedLetter(this.enigma.getEncodedLetter(input));
+        this.render();
+      } catch (err) {
+        //Silently accept the situation
+      }
     });
 
   }
@@ -289,6 +300,14 @@ export default class Enigma {
 
   }
 
+  setLastEncodedLetter (letter) {
+    this.lastEncodedLetter = letter;
+  }
+
+  getLastEncodedLetter () {
+    return this.lastEncodedLetter;
+  }
+
   render () {
     ReactDOM.render(<EnigmaUI
       type={this.getType()}
@@ -298,6 +317,7 @@ export default class Enigma {
       centerRotor={this.getRotorProps(Const.CENTER_ROTOR)}
       rightRotor={this.getRotorProps(Const.RIGHT_ROTOR)}
       plugBoardWirings={this.getPlugBoardWirings()}
+      lastEncodedLetter={this.getLastEncodedLetter()}
       eventManager={this.eventManager}
     />, this.container);
   }

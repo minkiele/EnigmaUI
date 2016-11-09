@@ -88,7 +88,7 @@ export default class Enigma extends React.Component {
           </div>
         </div>
         <PlugBoard wirings={this.props.plugBoardWirings} eventManager={this.props.eventManager} />
-        <Keyboard eventManager={this.props.eventManager} />
+        <Keyboard lastEncodedLetter={this.props.lastEncodedLetter} eventManager={this.props.eventManager} />
       </div>
     );
   }
@@ -102,6 +102,7 @@ Enigma.propTypes = {
   centerRotor: React.PropTypes.object,
   rightRotor: React.PropTypes.object,
   plugBoardWirings: React.PropTypes.object,
+  lastEncodedLetter: React.PropTypes.string,
   eventManager: React.PropTypes.instanceOf(EventEmitter).isRequired
 };
 

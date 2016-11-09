@@ -11,6 +11,11 @@ export default class Reflector extends React.Component {
       type: this.props.type
     };
   }
+
+  componentWillReceiveProps (nextProps) {
+    this.setState(nextProps);
+  }
+
   updateType (type) {
     this.setState({
       type: type

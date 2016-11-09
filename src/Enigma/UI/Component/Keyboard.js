@@ -1,40 +1,52 @@
 import React from 'react';
 import {normalizeInput} from 'enigma-minkiele/src/Utils';
+import EventEmitter from 'events';
+
+const EMPTY_STREAM = '';
 
 export default class Keyboard extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      inputLetter: '',
-      input: '',
-      output: ''
+      inputLetter: EMPTY_STREAM,
+      input: EMPTY_STREAM,
+      output: EMPTY_STREAM,
+      pendingInputLetter: EMPTY_STREAM
     };
-    this.updateInput = this.updateInput.bind(this);
   }
-  updateInput (evt) {
+  updateInput (value) {
 
     try {
 
-      let newInput = normalizeInput(evt.target.value);
+      let normalizedValue = normalizeInput(value);
 
       this.setState((previousState) => {
-        let newOutput = this.props.enigma.getEncodedLetter(newInput);
         return {
           inputLetter: '',
-          input: `${previousState.input}${newInput}`,
-          output: `${previousState.output}${newOutput}`,
+          pendingInputLetter: normalizedValue
         }
       }, () => {
-        this.props.updateWindowLetters();
+        this.props.eventManager.emit('change.keyboard.input', this.state.pendingInputLetter);
       });
     } catch(e) {
       //Do nothing
     }
   }
+
+  componentWillReceiveProps (futureProps) {
+    this.setState(function (previousState) {
+        return {
+          pendingInputLetter: EMPTY_STREAM,
+          input: `${previousState.input}${previousState.pendingInputLetter}`,
+          output: `${previousState.output}${futureProps.lastEncodedLetter}`
+        }
+    });
+  }
+
   getGroupedLetters (letters) {
     let output = '';
     for(let i = 0; i < letters.length; i += 4) {
-      output += `${letters.substring(i, Math.min(i + 4, letters.length - 1))} `;
+      output += `${letters.substr(i, 4)} `;
     }
     return output.trim();
   }
@@ -46,7 +58,7 @@ export default class Keyboard extends React.Component {
           <code>
             {this.getGroupedLetters(this.state.input)}
           </code>
-          <input className="form-control" type="text" value={this.state.inputLetter} onChange={this.updateInput} maxLength="1" pattern="[A-Z]" size="2" />
+          <input className="form-control" type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="2" />
         </div>
         <div className="keyboardOutput">
           <code>
@@ -57,3 +69,12 @@ export default class Keyboard extends React.Component {
     );
   }
 }
+
+Keyboard.propTypes = {
+  lastEncodedLetter: React.PropTypes.string.isRequired,
+  eventManager: React.PropTypes.instanceOf(EventEmitter).isRequired
+};
+
+Keyboard.defaultProps = {
+  lastEncodedLetter: EMPTY_STREAM
+};
