@@ -305,7 +305,8 @@ export default class Enigma {
   }
 
   getLastEncodedLetter () {
-    return this.lastEncodedLetter;
+    let lastEncodedLetter = this.lastEncodedLetter;
+    return lastEncodedLetter;
   }
 
   render () {

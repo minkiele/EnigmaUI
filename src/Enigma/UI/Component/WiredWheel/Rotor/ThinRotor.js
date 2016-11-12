@@ -9,7 +9,7 @@ export default class ThinRotor extends React.Component {
     return [RO_TYPE_THIN_BETA, RO_TYPE_THIN_GAMMA].map((rotor) => {
       let disabled = this.props.usedRotors.indexOf(rotor) > -1;
       return <option key={rotor} disabled={disabled} value={rotor}>{rotor}</option>;
-    })
+    });
   }
 
   render () {

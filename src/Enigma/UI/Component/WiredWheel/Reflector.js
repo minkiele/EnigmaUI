@@ -8,6 +8,7 @@ export default class Reflector extends React.Component {
   updateType (type) {
     this.props.eventManager.emit('change.reflector', type);
   }
+
   render () {
     return (
       <div className="enigmaReflector">

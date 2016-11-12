@@ -35,13 +35,13 @@ export default class Keyboard extends React.Component {
 
   componentWillReceiveProps (futureProps) {
     if(this.state.pendingInputLetter !== EMPTY_STREAM) {
-        this.setState(function (previousState) {
-            return {
-              pendingInputLetter: EMPTY_STREAM,
-              input: `${previousState.input}${previousState.pendingInputLetter}`,
-              output: `${previousState.output}${futureProps.lastEncodedLetter}`
-            }
-        });
+      this.setState(function (previousState) {
+        return {
+          pendingInputLetter: EMPTY_STREAM,
+          input: `${previousState.input}${previousState.pendingInputLetter}`,
+          output: `${previousState.output}${futureProps.lastEncodedLetter}`
+        }
+      });
     }
   }
 
@@ -52,6 +52,7 @@ export default class Keyboard extends React.Component {
     }
     return output.trim();
   }
+
   render () {
     return (
       <div className="keyboard">

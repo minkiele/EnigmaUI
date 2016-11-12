@@ -10,13 +10,15 @@ export const INITIAL_WINDOW_POSITION = 'A';
 export default class Rotor extends React.Component {
 
   updateType (type) {
-      this.props.eventManager.emit('change.rotor.type', type, this.props.position);
+    this.props.eventManager.emit('change.rotor.type', type, this.props.position);
   }
+
   updateRingPosition (ringPosition) {
-      this.props.eventManager.emit('change.rotor.ringPosition', toInt(ringPosition), this.props.position);
+    this.props.eventManager.emit('change.rotor.ringPosition', toInt(ringPosition), this.props.position);
   }
+
   updateWindowLetter (windowLetter) {
-      this.props.eventManager.emit('change.rotor.windowLetter', normalizeInput(windowLetter), this.props.position);
+    this.props.eventManager.emit('change.rotor.windowLetter', normalizeInput(windowLetter), this.props.position);
   }
 
   renderRingPositions () {
