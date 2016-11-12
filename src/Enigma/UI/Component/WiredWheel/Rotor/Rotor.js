@@ -6,8 +6,9 @@ import {RO_TYPE_I, RO_TYPE_II, RO_TYPE_III, RO_TYPE_IV, RO_TYPE_V, RO_TYPE_VI, R
 export default class Rotor extends React.Component {
 
   renderChoices () {
-    return [RO_TYPE_I, RO_TYPE_II, RO_TYPE_III, RO_TYPE_IV, RO_TYPE_V, RO_TYPE_VI, RO_TYPE_VII, RO_TYPE_VIII].map(function (rotor) {
-      return <option key={rotor} value={rotor}>{rotor}</option>;
+    return [RO_TYPE_I, RO_TYPE_II, RO_TYPE_III, RO_TYPE_IV, RO_TYPE_V, RO_TYPE_VI, RO_TYPE_VII, RO_TYPE_VIII].map((rotor) => {
+      let disabled = this.props.usedRotors.indexOf(rotor) > -1;
+      return <option key={rotor} disabled={disabled} value={rotor}>{rotor}</option>;
     });
   }
 

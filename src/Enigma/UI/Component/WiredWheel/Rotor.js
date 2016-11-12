@@ -9,7 +9,17 @@ export const INITIAL_WINDOW_POSITION = 'A';
 
 export default class Rotor extends React.Component {
 
-  getRingPositions () {
+  updateType (type) {
+      this.props.eventManager.emit('change.rotor.type', type, this.props.position);
+  }
+  updateRingPosition (ringPosition) {
+      this.props.eventManager.emit('change.rotor.ringPosition', toInt(ringPosition), this.props.position);
+  }
+  updateWindowLetter (windowLetter) {
+      this.props.eventManager.emit('change.rotor.windowLetter', normalizeInput(windowLetter), this.props.position);
+  }
+
+  renderRingPositions () {
     let options = [];
     for(let i = 0; i < 26; i += 1){
       let label = `${getLetter(i)} - ${(i + 1)}`;
@@ -21,30 +31,8 @@ export default class Rotor extends React.Component {
     return options;
 
   }
-  renderChoices () {
-    var options = [];
-
-    return this.props.choices.map(function (choice) {
-      return (
-        <option key={choice.value} value={choice.value}>
-          {choice.label}
-        </option>
-      );
-    });
-  }
-
-  updateType (type) {
-      this.props.eventManager.emit('change.rotor.type', type, this.props.position);
-  }
-  updateRingPosition (ringPosition) {
-      this.props.eventManager.emit('change.rotor.ringPosition', toInt(ringPosition), this.props.position);
-  }
-  updateWindowLetter (windowLetter) {
-      this.props.eventManager.emit('change.rotor.windowLetter', normalizeInput(windowLetter), this.props.position);
-  }
 
   render () {
-    let ringPositions = this.getRingPositions();
     return (
       <div className="enigmaRotor">
         <div className="enigmaRotorType">
@@ -58,7 +46,7 @@ export default class Rotor extends React.Component {
           <label>Ring Position</label>
           <select className="form-control" value={this.props.ringPosition} onChange={(evt) => { this.updateRingPosition(evt.target.value); }}>
             <option value="">Choose a ring position</option>
-            {ringPositions}
+            {this.renderRingPositions()}
           </select>
         </div>
         <div className="enigmaRotorWindowLetter">
@@ -75,6 +63,7 @@ Rotor.propTypes = {
   position: React.PropTypes.string.isRequired,
   ringPosition: React.PropTypes.number.isRequired,
   windowLetter: React.PropTypes.string.isRequired,
+  usedRotors: React.PropTypes.array.isRequired,
   eventManager: React.PropTypes.instanceOf(EventEmitter).isRequired
 };
 
