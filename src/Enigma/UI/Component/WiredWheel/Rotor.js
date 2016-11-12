@@ -8,18 +8,6 @@ export const INITIAL_RING_POSITION = 0;
 export const INITIAL_WINDOW_POSITION = 'A';
 
 export default class Rotor extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      type: this.props.type,
-      ringPosition: this.props.ringPosition,
-      windowLetter: this.props.windowLetter
-    };
-  }
-
-  componentWillReceiveProps (nextProps) {
-    this.setState(nextProps);
-  }
 
   getRingPositions () {
     let options = [];
@@ -46,27 +34,13 @@ export default class Rotor extends React.Component {
   }
 
   updateType (type) {
-    this.setState({
-      type: type,
-      ringPosition: INITIAL_RING_POSITION,
-      windowLetter: INITIAL_WINDOW_POSITION
-    }, () => {
-      this.props.eventManager.emit('change.rotor.type', this.state.type, this.props.position);
-    });
+      this.props.eventManager.emit('change.rotor.type', type, this.props.position);
   }
   updateRingPosition (ringPosition) {
-    this.setState({
-      ringPosition: toInt(ringPosition)
-    }, () => {
-      this.props.eventManager.emit('change.rotor.ringPosition', this.state.ringPosition, this.props.position);
-    });
+      this.props.eventManager.emit('change.rotor.ringPosition', toInt(ringPosition), this.props.position);
   }
   updateWindowLetter (windowLetter) {
-    this.setState({
-      windowLetter: normalizeInput(windowLetter)
-    }, () => {
-      this.props.eventManager.emit('change.rotor.windowLetter', this.state.windowLetter, this.props.position);
-    });
+      this.props.eventManager.emit('change.rotor.windowLetter', normalizeInput(windowLetter), this.props.position);
   }
 
   render () {
@@ -75,21 +49,21 @@ export default class Rotor extends React.Component {
       <div className="enigmaRotor">
         <div className="enigmaRotorType">
           <label>Type</label>
-          <select className="form-control" value={this.state.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
+          <select className="form-control" value={this.props.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
             <option value="">Choose a rotor</option>
             {this.props.children}
           </select>
         </div>
         <div className="enigmaRotorRingPosition">
           <label>Ring Position</label>
-          <select className="form-control" value={this.state.ringPosition} onChange={(evt) => { this.updateRingPosition(evt.target.value); }}>
+          <select className="form-control" value={this.props.ringPosition} onChange={(evt) => { this.updateRingPosition(evt.target.value); }}>
             <option value="">Choose a ring position</option>
             {ringPositions}
           </select>
         </div>
         <div className="enigmaRotorWindowLetter">
           <label>Window Position</label>
-          <input className="form-control" type="text" value={this.state.windowLetter} onChange={(evt) => { this.updateWindowLetter(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="2" />
+          <input className="form-control" type="text" value={this.props.windowLetter} onChange={(evt) => { this.updateWindowLetter(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="2" />
         </div>
       </div>
     );
