@@ -85,7 +85,7 @@ export default class Enigma extends React.Component {
       case TYPE_M4:
         config = (
           <div className={this.getRotorColsClass()}>
-            <Panel title="Fourth Rotor">
+            <Panel title="Fourth Rotor" type={this.getPanelSuccessFromRotor('fourthRotor')}>
               <ThinRotor {...this.props.fourthRotor} usedRotors={this.getUsedRotors('fourthRotor')} eventManager={this.props.eventManager} />
             </Panel>
           </div>
@@ -95,6 +95,10 @@ export default class Enigma extends React.Component {
 
     return config;
 
+  }
+
+  getPanelSuccessFromRotor (rotor) {
+    return typeof this.props[rotor].type === 'string' && this.props[rotor].type.length > 0 ? 'success' : null;
   }
 
   render () {
@@ -114,17 +118,17 @@ export default class Enigma extends React.Component {
           <div className="row">
             {this.renderRotorsConfiguration()}
             <div className={this.getRotorColsClass()}>
-              <Panel title="Left Rotor">
+              <Panel title="Left Rotor" type={this.getPanelSuccessFromRotor('leftRotor')}>
                 <Rotor {...this.props.leftRotor} position={LEFT_ROTOR} usedRotors={this.getUsedRotors('leftRotor')} eventManager={this.props.eventManager} />
               </Panel>
             </div>
             <div className={this.getRotorColsClass()}>
-              <Panel title="Center Rotor">
+              <Panel title="Center Rotor" type={this.getPanelSuccessFromRotor('centerRotor')}>
                 <Rotor {...this.props.centerRotor} position={CENTER_ROTOR} usedRotors={this.getUsedRotors('centerRotor')} eventManager={this.props.eventManager} />
               </Panel>
             </div>
             <div className={this.getRotorColsClass()}>
-              <Panel title="Right Rotor">
+              <Panel title="Right Rotor" type={this.getPanelSuccessFromRotor('rightRotor')}>
                 <Rotor {...this.props.rightRotor} position={RIGHT_ROTOR} usedRotors={this.getUsedRotors('rightRotor')} eventManager={this.props.eventManager} />
               </Panel>
             </div>

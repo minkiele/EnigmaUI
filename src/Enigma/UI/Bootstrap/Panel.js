@@ -26,7 +26,7 @@ export default class Panel extends React.Component {
 }
 
 Panel.propTypes = {
-  type: React.PropTypes.string.isRequired,
+  type: React.PropTypes.string,
   title: React.PropTypes.string
 };
 
