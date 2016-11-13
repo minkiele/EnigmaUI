@@ -1,5 +1,5 @@
 import React from 'react';
-import {getLetter} from 'enigma-minkiele/src/Utils';
+import {getLetter, normalizeInput} from 'enigma-minkiele/src/Utils';
 
 export default class PlugBoardWiring extends React.Component {
   constructor (props) {
@@ -8,6 +8,18 @@ export default class PlugBoardWiring extends React.Component {
       //Shallow copy of the array
       wiring: this.props.wiring.slice()
     };
+
+    this.state.immutable = this.isWiringComplete(this.state.wiring);
+
+  }
+
+  isWiringComplete (wiring) {
+    try {
+      wiring.forEach(normalizeInput);
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 
   updatePlug (value, key) {

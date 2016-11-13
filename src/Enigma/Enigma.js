@@ -128,10 +128,10 @@ export default class Enigma {
   }
 
   getType () {
-    if(this.enigma instanceof EnigmaM3) {
-      return Const.TYPE_M3;
-    } else if(this.enigma instanceof EnigmaM4) {
+    if(this.enigma instanceof EnigmaM4) {
       return Const.TYPE_M4;
+    } else if(this.enigma instanceof EnigmaM3) {
+      return Const.TYPE_M3;
     }
   }
 

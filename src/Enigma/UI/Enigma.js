@@ -7,6 +7,7 @@ import ThinRotor from './Component/WiredWheel/Rotor/ThinRotor';
 import ThinReflector from './Component/WiredWheel/Reflector/ThinReflector';
 import Keyboard from './Component/Keyboard';
 import {TYPE_M3, TYPE_M4, LEFT_ROTOR, CENTER_ROTOR, RIGHT_ROTOR, DEFAULT_TYPE} from '../Constants';
+import Panel from './Bootstrap/Panel';
 
 export default class Enigma extends React.Component {
 
@@ -14,8 +15,8 @@ export default class Enigma extends React.Component {
     super(props);
   }
 
-  updateType (newType) {
-    this.props.eventManager.emit('change.type', this.type);
+  updateType (type) {
+    this.props.eventManager.emit('change.type', type);
   }
 
   getUsedRotors (excludedRotor) {
@@ -37,32 +38,56 @@ export default class Enigma extends React.Component {
 
   }
 
-  renderEnigmaConfiguration () {
+  renderReflectorConfiguration () {
+
+    let title, config;
+
+    switch(this.props.type) {
+      case TYPE_M3:
+        title = 'Reflector';
+        config = (
+          <Reflector type={this.props.reflector} eventManager={this.props.eventManager} />
+        );
+        break;
+      case TYPE_M4:
+        title = 'Thin Reflector';
+        config = (
+          <ThinReflector type={this.props.reflector} eventManager={this.props.eventManager} />
+        );
+        break;
+    }
+
+    return (
+      <Panel title={title}>
+        {config}
+      </Panel>
+    );
+  }
+
+  getRotorColsClass () {
+    let width;
+    switch(this.props.type) {
+      case TYPE_M3:
+        width = 4;
+        break;
+      case TYPE_M4:
+        width = 3;
+        break;
+    }
+    return `col-xs-12 col-sm-12 col-md-${width} col-lg-${width}`;
+  }
+
+  renderRotorsConfiguration () {
 
     let config;
 
     switch(this.props.type) {
-      case TYPE_M3:
-        config = (
-          <div className="enigmaM3Configuration">
-            <div className="reflector">
-              <h2>Reflector</h2>
-              <Reflector type={this.props.reflector} eventManager={this.props.eventManager} />
-            </div>
-          </div>
-        );
-        break;
       case TYPE_M4:
         config = (
-          <div className="enigmaM4Configuration">
-            <div className="reflector thinReflector">
-              <h2>Thin Reflector</h2>
-              <ThinReflector type={this.props.reflector} eventManager={this.props.eventManager} />
-            </div>
-            <div className="rotor thinRotor">
-              <h2>Fourth Rotor</h2>
+          <div className={this.getRotorColsClass()}>
+            <Panel title="Fourth Rotor">
               <ThinRotor {...this.props.fourthRotor} usedRotors={this.getUsedRotors('fourthRotor')} eventManager={this.props.eventManager} />
-            </div>
+            </Panel>
           </div>
         );
         break;
@@ -77,26 +102,32 @@ export default class Enigma extends React.Component {
     return (
       <div className="enigmaUI">
         <h1>EnigmaUI</h1>
-        <div className="enigmaType">
+        <Panel title="Machine type">
           <label>Type</label>
-          <select className="form-control" value={this.props.type} onChange={(evt) => {this.updateType(evt.target.value)}}>
+          <select className="form-control" value={this.props.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
             <option value={TYPE_M3}>Enigma M3</option>
             <option value={TYPE_M4}>Enigma M4</option>
           </select>
-        </div>
+        </Panel>
         <div className="enigmaConfiguration">
-          {this.renderEnigmaConfiguration()}
-          <div className="leftRotor">
-            <h2>Left Rotor</h2>
-            <Rotor {...this.props.leftRotor} position={LEFT_ROTOR} usedRotors={this.getUsedRotors('leftRotor')} eventManager={this.props.eventManager} />
-          </div>
-          <div className="centerRotor">
-            <h2>Center Rotor</h2>
-            <Rotor {...this.props.centerRotor} position={CENTER_ROTOR} usedRotors={this.getUsedRotors('centerRotor')} eventManager={this.props.eventManager} />
-          </div>
-          <div className="rightRotor">
-            <h2>Right Rotor</h2>
-            <Rotor {...this.props.rightRotor} position={RIGHT_ROTOR} usedRotors={this.getUsedRotors('rightRotor')} eventManager={this.props.eventManager} />
+          {this.renderReflectorConfiguration()}
+          <div className="row">
+            {this.renderRotorsConfiguration()}
+            <div className={this.getRotorColsClass()}>
+              <Panel title="Left Rotor">
+                <Rotor {...this.props.leftRotor} position={LEFT_ROTOR} usedRotors={this.getUsedRotors('leftRotor')} eventManager={this.props.eventManager} />
+              </Panel>
+            </div>
+            <div className={this.getRotorColsClass()}>
+              <Panel title="Center Rotor">
+                <Rotor {...this.props.centerRotor} position={CENTER_ROTOR} usedRotors={this.getUsedRotors('centerRotor')} eventManager={this.props.eventManager} />
+              </Panel>
+            </div>
+            <div className={this.getRotorColsClass()}>
+              <Panel title="Right Rotor">
+                <Rotor {...this.props.rightRotor} position={RIGHT_ROTOR} usedRotors={this.getUsedRotors('rightRotor')} eventManager={this.props.eventManager} />
+              </Panel>
+            </div>
           </div>
         </div>
         <PlugBoard wirings={this.props.plugBoardWirings} eventManager={this.props.eventManager} />
