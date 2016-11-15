@@ -1,7 +1,8 @@
 import EnigmaApp from './Enigma/Enigma';
 
-//Bootstrapping jQuery and Bootstrap
-import "jquery";
-import "bootstrap";
+//bootstrapping jQuery and Bootstrap
+//They are not needed now, uncomment when useful
+//import "jquery";
+//import "bootstrap";
 
 let enigmaApp = new EnigmaApp(document.getElementById('app'));

@@ -110,7 +110,7 @@ export default class Enigma extends React.Component {
     return (
       <div className="enigmaUI">
         <h1>EnigmaUI</h1>
-        <Panel title="Machine type">
+        <Panel type="info" title="Machine type">
           <label>Type</label>
           <select className="form-control" value={this.props.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
             <option value={TYPE_M3}>Enigma M3</option>
@@ -138,7 +138,7 @@ export default class Enigma extends React.Component {
             </div>
           </div>
         </div>
-        <Panel title="Plugboard">
+        <Panel type="info" title="Plugboard">
           <PlugBoard wirings={this.props.plugBoardWirings} eventManager={this.props.eventManager} />
         </Panel>
         <Panel title="Keyboard">

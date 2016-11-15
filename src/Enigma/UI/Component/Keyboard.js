@@ -1,6 +1,7 @@
 import React from 'react';
 import {normalizeInput} from 'enigma-minkiele/src/Utils';
 import EventEmitter from 'events';
+import assign from 'object-assign';
 
 const EMPTY_STREAM = '';
 
@@ -36,11 +37,20 @@ export default class Keyboard extends React.Component {
   componentWillReceiveProps (futureProps) {
     if(this.state.pendingInputLetter !== EMPTY_STREAM) {
       this.setState(function (previousState) {
-        return {
-          pendingInputLetter: EMPTY_STREAM,
-          input: `${previousState.input}${previousState.pendingInputLetter}`,
-          output: `${previousState.output}${futureProps.lastEncodedLetter}`
+
+        let newState = {
+          pendingInputLetter: EMPTY_STREAM
+        };
+
+        if(!!futureProps.lastEncodedLetter) {
+          assign(newState, {
+            input: `${previousState.input}${previousState.pendingInputLetter}`,
+            output: `${previousState.output}${futureProps.lastEncodedLetter}`
+          });
         }
+
+        return newState;
+
       });
     }
   }
@@ -56,19 +66,22 @@ export default class Keyboard extends React.Component {
   render () {
     return (
       <div className="keyboard">
-        <label>Keyboard input</label>
-        <input className="form-control" type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="1" />
-        <div className="keyboardInput">
-          <strong>Input:</strong>&nbsp;
-          <code>
-            {this.getGroupedLetters(this.state.input)}
-          </code>
+        <div className="row">
+          <div className="keyboardInput col-xs-12 col-md-2">
+            <input className="form-control" type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="1" placeholder="Input" />
           </div>
-        <div className="keyboardOutput">
-          <strong>Output:</strong>&nbsp;
-          <code>
-            {this.getGroupedLetters(this.state.output)}
-          </code>
+          <div className="keyboardInput col-xs-12 col-md-5">
+            <strong>Input:</strong>&nbsp;
+            <code>
+              {this.getGroupedLetters(this.state.input)}
+            </code>
+          </div>
+          <div className="keyboardOutput col-xs-12 col-md-5">
+            <strong>Output:</strong>&nbsp;
+            <code>
+              {this.getGroupedLetters(this.state.output)}
+            </code>
+          </div>
         </div>
       </div>
     );
