@@ -58,7 +58,7 @@ export default class Enigma extends React.Component {
     }
 
     return (
-      <Panel title={title}>
+      <Panel type={this.getPanelSuccessFromReflector()} title={title}>
         {config}
       </Panel>
     );
@@ -74,7 +74,7 @@ export default class Enigma extends React.Component {
         width = 3;
         break;
     }
-    return `col-xs-12 col-sm-12 col-md-${width} col-lg-${width}`;
+    return `col-xs-12 col-md-${width}`;
   }
 
   renderRotorsConfiguration () {
@@ -98,7 +98,11 @@ export default class Enigma extends React.Component {
   }
 
   getPanelSuccessFromRotor (rotor) {
-    return typeof this.props[rotor].type === 'string' && this.props[rotor].type.length > 0 ? 'success' : null;
+    return !!this.props[rotor].type ? 'success' : void (0);
+  }
+
+  getPanelSuccessFromReflector() {
+    return !!this.props.reflector ? 'success' : void (0);
   }
 
   render () {
@@ -134,8 +138,12 @@ export default class Enigma extends React.Component {
             </div>
           </div>
         </div>
-        <PlugBoard wirings={this.props.plugBoardWirings} eventManager={this.props.eventManager} />
-        <Keyboard lastEncodedLetter={this.props.lastEncodedLetter} eventManager={this.props.eventManager} />
+        <Panel title="Plugboard">
+          <PlugBoard wirings={this.props.plugBoardWirings} eventManager={this.props.eventManager} />
+        </Panel>
+        <Panel title="Keyboard">
+          <Keyboard lastEncodedLetter={this.props.lastEncodedLetter} eventManager={this.props.eventManager} />
+        </Panel>
       </div>
     );
   }
@@ -148,7 +156,7 @@ Enigma.propTypes = {
   leftRotor: React.PropTypes.object,
   centerRotor: React.PropTypes.object,
   rightRotor: React.PropTypes.object,
-  plugBoardWirings: React.PropTypes.object,
+  plugBoardWirings: React.PropTypes.array,
   lastEncodedLetter: React.PropTypes.string,
   eventManager: React.PropTypes.instanceOf(EventEmitter).isRequired
 };

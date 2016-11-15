@@ -4,8 +4,6 @@ export const DEFAULT_PANEL_TYPE = 'default';
 
 export default class Panel extends React.Component {
 
-
-
   render () {
     return (
       <div className={`panel panel-${this.props.type}`}>
@@ -26,7 +24,7 @@ export default class Panel extends React.Component {
 }
 
 Panel.propTypes = {
-  type: React.PropTypes.string,
+  type: React.PropTypes.string.isRequired,
   title: React.PropTypes.string
 };
 

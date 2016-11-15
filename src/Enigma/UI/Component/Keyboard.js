@@ -56,14 +56,16 @@ export default class Keyboard extends React.Component {
   render () {
     return (
       <div className="keyboard">
-        <h2>Keyboard</h2>
+        <label>Keyboard input</label>
+        <input className="form-control" type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="1" />
         <div className="keyboardInput">
+          <strong>Input:</strong>&nbsp;
           <code>
             {this.getGroupedLetters(this.state.input)}
           </code>
-          <input className="form-control" type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="2" />
-        </div>
+          </div>
         <div className="keyboardOutput">
+          <strong>Output:</strong>&nbsp;
           <code>
             {this.getGroupedLetters(this.state.output)}
           </code>
