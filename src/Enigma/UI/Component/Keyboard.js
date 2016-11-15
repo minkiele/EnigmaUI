@@ -2,19 +2,29 @@ import React from 'react';
 import {normalizeInput} from 'enigma-minkiele/src/Utils';
 import EventEmitter from 'events';
 import assign from 'object-assign';
+import Row from '../Bootstrap/Row';
 
 const EMPTY_STREAM = '';
 
 export default class Keyboard extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
+    this.state = this.getResetState();
+  }
+
+  getResetState () {
+    return {
       inputLetter: EMPTY_STREAM,
       input: EMPTY_STREAM,
       output: EMPTY_STREAM,
       pendingInputLetter: EMPTY_STREAM
     };
   }
+
+  resetState () {
+    this.setState(this.getResetState());
+  }
+
   updateInput (value) {
 
     try {
@@ -63,12 +73,37 @@ export default class Keyboard extends React.Component {
     return output.trim();
   }
 
+  renderInputGroup (input) {
+
+    let blockClassName;
+    let btnClassName;
+
+    if(this.state.output.length > 0){
+      blockClassName = 'input-group';
+      btnClassName = 'input-group-btn';
+    } else {
+      btnClassName = 'hidden';
+    }
+
+    return (
+      <div className={blockClassName}>
+        {input}
+        <span className={btnClassName}>
+          <button className="btn btn-danger" onClick={() => { this.resetState(); }}>Reset</button>
+        </span>
+      </div>
+    );
+  }
+
   render () {
+
     return (
       <div className="keyboard">
-        <div className="row">
+        <Row>
           <div className="keyboardInput col-xs-12 col-md-2">
-            <input className="form-control" type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="1" placeholder="Input" />
+            {this.renderInputGroup(
+              <input className="form-control" type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="1" placeholder="Input" />
+            )}
           </div>
           <div className="keyboardInput col-xs-12 col-md-5">
             <strong>Input:</strong>&nbsp;
@@ -82,7 +117,7 @@ export default class Keyboard extends React.Component {
               {this.getGroupedLetters(this.state.output)}
             </code>
           </div>
-        </div>
+        </Row>
       </div>
     );
   }

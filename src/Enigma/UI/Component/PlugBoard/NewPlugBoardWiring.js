@@ -1,6 +1,7 @@
 import React from 'react';
 import {getLetter, getIndex, normalizeInput} from 'enigma-minkiele/src/Utils';
 import EventEmitter from 'events';
+import Row from '../../Bootstrap/Row';
 
 export default class NewPlugBoardWiring extends React.Component {
 
@@ -71,7 +72,7 @@ export default class NewPlugBoardWiring extends React.Component {
   render () {
 
     return (
-      <div className="row enigmaPlugBoardWiring">
+      <Row className="enigmaPlugBoardWiring">
         <div className="col-xs-12 col-sm-5">
           <select className="form-control" value={this.state.wiring[0]} onChange={(evt) => { this.updatePlug(evt.target.value, 0); }}>
             <option value=""></option>
@@ -87,7 +88,7 @@ export default class NewPlugBoardWiring extends React.Component {
         <div className="col-xs-12 col-sm-2">
           <button className="btn btn-primary btn-block" disabled={!this.isWiringComplete()} onClick={() => { this.addWiring(); }}>Plug</button>
         </div>
-      </div>
+      </Row>
     );
   }
 

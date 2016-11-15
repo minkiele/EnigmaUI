@@ -8,6 +8,7 @@ import ThinReflector from './Component/WiredWheel/Reflector/ThinReflector';
 import Keyboard from './Component/Keyboard';
 import {TYPE_M3, TYPE_M4, LEFT_ROTOR, CENTER_ROTOR, RIGHT_ROTOR, DEFAULT_TYPE} from '../Constants';
 import Panel from './Bootstrap/Panel';
+import Row from './Bootstrap/Row';
 
 export default class Enigma extends React.Component {
 
@@ -119,7 +120,7 @@ export default class Enigma extends React.Component {
         </Panel>
         <div className="enigmaConfiguration">
           {this.renderReflectorConfiguration()}
-          <div className="row">
+          <Row>
             {this.renderRotorsConfiguration()}
             <div className={this.getRotorColsClass()}>
               <Panel title="Left Rotor" type={this.getPanelSuccessFromRotor('leftRotor')}>
@@ -136,7 +137,7 @@ export default class Enigma extends React.Component {
                 <Rotor {...this.props.rightRotor} position={RIGHT_ROTOR} usedRotors={this.getUsedRotors('rightRotor')} eventManager={this.props.eventManager} />
               </Panel>
             </div>
-          </div>
+          </Row>
         </div>
         <Panel type="info" title="Plugboard">
           <PlugBoard wirings={this.props.plugBoardWirings} eventManager={this.props.eventManager} />
