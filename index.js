@@ -3,7 +3,7 @@
   var webpackDevMiddleware = require('webpack-dev-middleware');
   var webpackHotMiddleware = require('webpack-hot-middleware');
   var webpack = require('webpack');
-  var webpackConfig = require('./webpack.config');
+  var webpackConfig = require('./webpack.config.bs');
   var bundler = webpack(webpackConfig);
   var less = require('less');
   var fs = require('fs');
