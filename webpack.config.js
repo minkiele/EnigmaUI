@@ -4,7 +4,6 @@ var path = require('path');
 module.exports = {
   entry: {
     app: [
-      /* 'babel-polyfill', */
       path.join(__dirname, 'src/app.js')
     ]
   },
@@ -18,8 +17,8 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV':JSON.stringify('production')
-    })/**/,
-    new webpack.optimize.UglifyJsPlugin()/**/
+    }),
+    new webpack.optimize.UglifyJsPlugin()
   ],
   module: {
     loaders: [{
