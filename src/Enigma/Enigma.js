@@ -1,7 +1,6 @@
 import EventEmitter from 'events';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import EnigmaM3 from 'enigma-minkiele/src/Enigma';
 import EnigmaM4 from 'enigma-minkiele/src/EnigmaM4';
@@ -34,9 +33,10 @@ import {getTimestampKey as getNewWiringKey} from './Utils';
 
 export default class Enigma {
 
-  constructor (container) {
+  constructor (renderingEngine) {
 
-    this.container = container;
+    this.renderingEngine = renderingEngine;
+
     this.eventManager = new EventEmitter();
     this.setType(Const.DEFAULT_TYPE);
     this.setLastEncodedLetter('');
@@ -99,10 +99,6 @@ export default class Enigma {
       }
     });
 
-  }
-
-  getEventManager () {
-    return this.eventManager;
   }
 
   setType (type) {
@@ -294,18 +290,24 @@ export default class Enigma {
     return lastEncodedLetter;
   }
 
+  getRenderingEngine () {
+    throw 'App must override this method';
+  }
+
   render () {
-    ReactDOM.render(<EnigmaUI
-      type={this.getType()}
-      reflector={this.getReflectorType()}
-      fourthRotor={this.getRotorProps(Const.FOURTH_ROTOR)}
-      leftRotor={this.getRotorProps(Const.LEFT_ROTOR)}
-      centerRotor={this.getRotorProps(Const.CENTER_ROTOR)}
-      rightRotor={this.getRotorProps(Const.RIGHT_ROTOR)}
-      plugBoardWirings={this.getPlugBoardWirings()}
-      lastEncodedLetter={this.getLastEncodedLetter()}
-      eventManager={this.eventManager}
-    />, this.container);
+    this.renderingEngine.render(
+      <EnigmaUI
+        type={this.getType()}
+        reflector={this.getReflectorType()}
+        fourthRotor={this.getRotorProps(Const.FOURTH_ROTOR)}
+        leftRotor={this.getRotorProps(Const.LEFT_ROTOR)}
+        centerRotor={this.getRotorProps(Const.CENTER_ROTOR)}
+        rightRotor={this.getRotorProps(Const.RIGHT_ROTOR)}
+        plugBoardWirings={this.getPlugBoardWirings()}
+        lastEncodedLetter={this.getLastEncodedLetter()}
+        eventManager={this.eventManager}
+      />
+    );
   }
 
 }
