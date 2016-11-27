@@ -2,11 +2,16 @@ import React from 'react';
 import {normalizeInput} from 'enigma-minkiele/src/Utils';
 import EventEmitter from 'events';
 import assign from 'object-assign';
-import Row from '../Bootstrap/Row';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import Button from 'react-bootstrap/lib/Button';
 
-const EMPTY_STREAM = '';
+import {KEYBOARD_EMPTY_STREAM as EMPTY_STREAM, DEFAULT_GROUP_BY} from '../../Constants';
 
 export default class Keyboard extends React.Component {
+
   constructor (props) {
     super(props);
     this.state = this.getResetState();
@@ -17,7 +22,8 @@ export default class Keyboard extends React.Component {
       inputLetter: EMPTY_STREAM,
       input: EMPTY_STREAM,
       output: EMPTY_STREAM,
-      pendingInputLetter: EMPTY_STREAM
+      pendingInputLetter: EMPTY_STREAM,
+      groupBy: DEFAULT_GROUP_BY
     };
   }
 
@@ -49,7 +55,8 @@ export default class Keyboard extends React.Component {
       this.setState(function (previousState) {
 
         let newState = {
-          pendingInputLetter: EMPTY_STREAM
+          pendingInputLetter: EMPTY_STREAM,
+          groupBy: previousState.groupBy
         };
 
         if(!!futureProps.lastEncodedLetter) {
@@ -67,10 +74,23 @@ export default class Keyboard extends React.Component {
 
   getGroupedLetters (letters) {
     let output = '';
-    for(let i = 0; i < letters.length; i += 4) {
-      output += `${letters.substr(i, 4)} `;
+    for(let i = 0; i < letters.length; i += this.state.groupBy) {
+      output += `${letters.substr(i, this.state.groupBy)} `;
     }
     return output.trim();
+  }
+
+  useGroupBy () {
+    return this.state.groupBy > 0;
+  }
+
+  updateGroupBy (value) {
+    value = parseInt(value);
+    if(value >= 0){
+      this.setState({
+        groupBy: value
+      });
+    }
   }
 
   renderInputGroup (input) {
@@ -85,11 +105,14 @@ export default class Keyboard extends React.Component {
       btnClassName = 'hidden';
     }
 
+
+    //Cannot use input groups here, spawning a new reset button
+    // will trigger a focus change
     return (
       <div className={blockClassName}>
         {input}
         <span className={btnClassName}>
-          <button className="btn btn-danger" onClick={() => { this.resetState(); }}>Reset</button>
+          <Button bsStyle="danger" onClick={() => { this.resetState(); }}>Reset</Button>
         </span>
       </div>
     );
@@ -100,23 +123,33 @@ export default class Keyboard extends React.Component {
     return (
       <div className="keyboard">
         <Row>
-          <div className="keyboardInput col-xs-12 col-md-2">
-            {this.renderInputGroup(
-              <input className="form-control" type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="1" placeholder="Input" />
-            )}
-          </div>
-          <div className="keyboardInput col-xs-12 col-md-5">
+          <Col className="keyboardInput" xs={12} md={2}>
+            <FormGroup>
+              {this.renderInputGroup(
+                <FormControl type="text" value={this.state.inputLetter} onChange={(evt) => { this.updateInput(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="1" placeholder="Input" />
+              )}
+            </FormGroup>
+          </Col>
+          <Col className="keyboardInput" xs={12} md={5}>
             <strong>Input:</strong>&nbsp;
             <code>
-              {this.getGroupedLetters(this.state.input)}
+              {this.useGroupBy() ? this.getGroupedLetters(this.state.input) : this.state.input }
             </code>
-          </div>
-          <div className="keyboardOutput col-xs-12 col-md-5">
+          </Col>
+          <Col className="keyboardOutput" xs={12} md={5}>
             <strong>Output:</strong>&nbsp;
             <code>
-              {this.getGroupedLetters(this.state.output)}
+              {this.useGroupBy() ? this.getGroupedLetters(this.state.output) : this.state.output}
             </code>
-          </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="keyboardOutput" xs={12} md={2}>
+            <FormGroup className="splitSize">
+              <label>Group output by</label>
+              <FormControl type="number" value={this.state.groupBy} onChange={(evt) => { this.updateGroupBy(evt.target.value); }} />
+            </FormGroup>
+          </Col>
         </Row>
       </div>
     );

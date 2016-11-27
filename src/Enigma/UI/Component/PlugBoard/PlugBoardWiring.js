@@ -1,5 +1,6 @@
 import React from 'react';
 import EventEmitter from 'events';
+import Button from 'react-bootstrap/lib/Button';
 
 export default class PlugBoardWiring extends React.Component {
 
@@ -12,7 +13,7 @@ export default class PlugBoardWiring extends React.Component {
       <div className="enigmaPlugBoardWiring clearfix">
         <strong> {this.props.wiring[0]} &hArr; {this.props.wiring[1]} </strong>
         <div className="pull-right">
-          <button className="btn btn-danger" onClick={() => { this.removeWiring(); }}>Remove</button>
+          <Button bsStyle="danger" onClick={() => { this.removeWiring(); }}>Remove</Button>
         </div>
       </div>
     );

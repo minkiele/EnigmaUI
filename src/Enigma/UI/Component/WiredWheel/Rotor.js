@@ -2,6 +2,9 @@ import React from 'react';
 import EventEmitter from 'events';
 import {getLetter, normalizeInput} from 'enigma-minkiele/src/Utils';
 import {toInt} from '../../../Utils';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 
 export const INITIAL_ROTOR_TYPE = '';
 export const INITIAL_RING_POSITION = 0;
@@ -37,24 +40,24 @@ export default class Rotor extends React.Component {
   render () {
     return (
       <div className="enigmaRotor">
-        <div className="enigmaRotorType">
-          <label>Type</label>
-          <select className="form-control" value={this.props.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
+        <FormGroup className="enigmaRotorType">
+          <ControlLabel>Type</ControlLabel>
+          <FormControl componentClass="select" value={this.props.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
             <option value="">Choose a rotor</option>
             {this.props.children}
-          </select>
-        </div>
-        <div className="enigmaRotorRingPosition">
-          <label>Ring Position</label>
-          <select className="form-control" value={this.props.ringPosition} onChange={(evt) => { this.updateRingPosition(evt.target.value); }}>
+          </FormControl>
+        </FormGroup>
+        <FormGroup className="enigmaRotorRingPosition">
+          <ControlLabel>Ring Position</ControlLabel>
+          <FormControl componentClass="select" value={this.props.ringPosition} onChange={(evt) => { this.updateRingPosition(evt.target.value); }}>
             <option value="">Choose a ring position</option>
             {this.renderRingPositions()}
-          </select>
-        </div>
-        <div className="enigmaRotorWindowLetter">
-          <label>Window Position</label>
-          <input className="form-control" type="text" value={this.props.windowLetter} onChange={(evt) => { this.updateWindowLetter(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="2" />
-        </div>
+          </FormControl>
+        </FormGroup>
+        <FormGroup className="enigmaRotorWindowLetter">
+          <ControlLabel>Window Position</ControlLabel>
+          <FormControl type="text" value={this.props.windowLetter} onChange={(evt) => { this.updateWindowLetter(evt.target.value); }} maxLength="1" pattern="[A-Z]" size="2" />
+        </FormGroup>
       </div>
     );
   }

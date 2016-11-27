@@ -36,3 +36,6 @@ export const FOURTH_ROTOR = EnigmaM4.FOURTH_ROTOR;
 export const LEFT_ROTOR = EnigmaM4.LEFT_ROTOR;
 export const CENTER_ROTOR = EnigmaM4.CENTER_ROTOR;
 export const RIGHT_ROTOR = EnigmaM4.RIGHT_ROTOR;
+
+export const DEFAULT_GROUP_BY = 4;
+export const KEYBOARD_EMPTY_STREAM = '';

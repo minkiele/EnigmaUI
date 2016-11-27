@@ -1,5 +1,7 @@
 import React from 'react';
 import EventEmitter from 'events';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 
 export const INITIAL_REFLECTOR_TYPE = '';
 
@@ -13,11 +15,11 @@ export default class Reflector extends React.Component {
     return (
       <div className="enigmaReflector">
         <div className="enigmaReflectorType">
-          <label>Type</label>
-          <select className="form-control" value={this.props.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
+          <ControlLabel>Type</ControlLabel>
+          <FormControl componentClass="select" value={this.props.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
             <option value="">Choose a reflector</option>
             {this.props.children}
-          </select>
+          </FormControl>
         </div>
       </div>
     );

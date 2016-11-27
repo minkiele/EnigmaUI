@@ -1,5 +1,6 @@
 import React from 'react';
 import EventEmitter from 'events';
+import TypeSelector from './Component/TypeSelector';
 import PlugBoard from './Component/PlugBoard';
 import Rotor from './Component/WiredWheel/Rotor/Rotor';
 import Reflector from './Component/WiredWheel/Reflector/Reflector';
@@ -7,17 +8,16 @@ import ThinRotor from './Component/WiredWheel/Rotor/ThinRotor';
 import ThinReflector from './Component/WiredWheel/Reflector/ThinReflector';
 import Keyboard from './Component/Keyboard';
 import {TYPE_M3, TYPE_M4, LEFT_ROTOR, CENTER_ROTOR, RIGHT_ROTOR, DEFAULT_TYPE} from '../Constants';
-import Panel from './Bootstrap/Panel';
-import Row from './Bootstrap/Row';
+import PT from './Bootstrap/PanelTitle';
+
+import Panel from 'react-bootstrap/lib/Panel';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 export default class Enigma extends React.Component {
 
   constructor (props) {
     super(props);
-  }
-
-  updateType (type) {
-    this.props.eventManager.emit('change.type', type);
   }
 
   getUsedRotors (excludedRotor) {
@@ -59,11 +59,12 @@ export default class Enigma extends React.Component {
     }
 
     return (
-      <Panel type={this.getPanelSuccessFromReflector()} title={title}>
+      <Panel bsStyle={this.getPanelSuccessFromReflector()} header={<PT>{title}</PT>}>
         {config}
       </Panel>
     );
   }
+
 
   getRotorColsClass () {
     let width;
@@ -75,7 +76,10 @@ export default class Enigma extends React.Component {
         width = 3;
         break;
     }
-    return `col-xs-12 col-md-${width}`;
+    return {
+      xs: 12,
+      md: width
+    };
   }
 
   renderRotorsConfiguration () {
@@ -85,11 +89,11 @@ export default class Enigma extends React.Component {
     switch(this.props.type) {
       case TYPE_M4:
         config = (
-          <div className={this.getRotorColsClass()}>
-            <Panel title="Fourth Rotor" type={this.getPanelSuccessFromRotor('fourthRotor')}>
+          <Col {...this.getRotorColsClass()}>
+            <Panel header={<PT>Fourth Rotor</PT>} bsStyle={this.getPanelSuccessFromRotor('fourthRotor')}>
               <ThinRotor {...this.props.fourthRotor} usedRotors={this.getUsedRotors('fourthRotor')} eventManager={this.props.eventManager} />
             </Panel>
-          </div>
+          </Col>
         );
         break;
     }
@@ -110,38 +114,34 @@ export default class Enigma extends React.Component {
 
     return (
       <div className="enigmaUI">
-        <Panel type="info" title="Machine type">
-          <label>Type</label>
-          <select className="form-control" value={this.props.type} onChange={(evt) => { this.updateType(evt.target.value); }}>
-            <option value={TYPE_M3}>Enigma M3</option>
-            <option value={TYPE_M4}>Enigma M4</option>
-          </select>
+        <Panel bsStyle="info" header={<PT>Machine type</PT>}>
+          <TypeSelector type={this.props.type} eventManager={this.props.eventManager} />
         </Panel>
         <div className="enigmaConfiguration">
           {this.renderReflectorConfiguration()}
           <Row>
             {this.renderRotorsConfiguration()}
-            <div className={this.getRotorColsClass()}>
-              <Panel title="Left Rotor" type={this.getPanelSuccessFromRotor('leftRotor')}>
+            <Col {...this.getRotorColsClass()}>
+              <Panel header={<PT>Left Rotor</PT>} bsStyle={this.getPanelSuccessFromRotor('leftRotor')}>
                 <Rotor {...this.props.leftRotor} position={LEFT_ROTOR} usedRotors={this.getUsedRotors('leftRotor')} eventManager={this.props.eventManager} />
               </Panel>
-            </div>
-            <div className={this.getRotorColsClass()}>
-              <Panel title="Center Rotor" type={this.getPanelSuccessFromRotor('centerRotor')}>
+            </Col>
+            <Col {...this.getRotorColsClass()}>
+              <Panel header={<PT>Center Rotor</PT>} bsStyle={this.getPanelSuccessFromRotor('centerRotor')}>
                 <Rotor {...this.props.centerRotor} position={CENTER_ROTOR} usedRotors={this.getUsedRotors('centerRotor')} eventManager={this.props.eventManager} />
               </Panel>
-            </div>
-            <div className={this.getRotorColsClass()}>
-              <Panel title="Right Rotor" type={this.getPanelSuccessFromRotor('rightRotor')}>
+            </Col>
+            <Col {...this.getRotorColsClass()}>
+              <Panel header={<PT>Right Rotor</PT>} bsStyle={this.getPanelSuccessFromRotor('rightRotor')}>
                 <Rotor {...this.props.rightRotor} position={RIGHT_ROTOR} usedRotors={this.getUsedRotors('rightRotor')} eventManager={this.props.eventManager} />
               </Panel>
-            </div>
+            </Col>
           </Row>
         </div>
-        <Panel type="info" title="Plugboard">
+        <Panel bsStyle="info" header={<PT>Plugboard</PT>}>
           <PlugBoard wirings={this.props.plugBoardWirings} eventManager={this.props.eventManager} />
         </Panel>
-        <Panel title="Keyboard">
+        <Panel header={<PT>Keyboard</PT>}>
           <Keyboard lastEncodedLetter={this.props.lastEncodedLetter} eventManager={this.props.eventManager} />
         </Panel>
       </div>

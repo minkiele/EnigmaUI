@@ -1,7 +1,11 @@
 import React from 'react';
 import {getLetter, getIndex, normalizeInput} from 'enigma-minkiele/src/Utils';
 import EventEmitter from 'events';
-import Row from '../../Bootstrap/Row';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
+import Button from 'react-bootstrap/lib/Button';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import FormControl from 'react-bootstrap/lib/FormControl';
 
 export default class NewPlugBoardWiring extends React.Component {
 
@@ -73,21 +77,25 @@ export default class NewPlugBoardWiring extends React.Component {
 
     return (
       <Row className="enigmaPlugBoardWiring">
-        <div className="col-xs-12 col-sm-5">
-          <select className="form-control" value={this.state.wiring[0]} onChange={(evt) => { this.updatePlug(evt.target.value, 0); }}>
-            <option value=""></option>
-            {this.renderAlphabet(this.state.wiring[1])}
-          </select>
-        </div>
-        <div className="col-xs-12 col-sm-5">
-          <select className="form-control" value={this.state.wiring[1]} onChange={(evt) => { this.updatePlug(evt.target.value, 1); }}>
-            <option value=""></option>
-            {this.renderAlphabet(this.state.wiring[0])}
-          </select>
-        </div>
-        <div className="col-xs-12 col-sm-2">
-          <button className="btn btn-primary btn-block" disabled={!this.isWiringComplete()} onClick={() => { this.addWiring(); }}>Plug</button>
-        </div>
+        <Col xs={12} sm={5}>
+          <FormGroup>
+            <FormControl componentClass="select" value={this.state.wiring[0]} onChange={(evt) => { this.updatePlug(evt.target.value, 0); }}>
+              <option value=""></option>
+              {this.renderAlphabet(this.state.wiring[1])}
+            </FormControl>
+          </FormGroup>
+        </Col>
+        <Col xs={12} sm={5}>
+          <FormGroup>
+            <FormControl componentClass="select" value={this.state.wiring[1]} onChange={(evt) => { this.updatePlug(evt.target.value, 1); }}>
+              <option value=""></option>
+              {this.renderAlphabet(this.state.wiring[0])}
+            </FormControl>
+          </FormGroup>
+        </Col>
+        <Col xs={12} sm={2}>
+          <Button bsStyle="primary" block disabled={!this.isWiringComplete()} onClick={() => { this.addWiring(); }}>Plug</Button>
+        </Col>
       </Row>
     );
   }
