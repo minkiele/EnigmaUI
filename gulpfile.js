@@ -63,7 +63,11 @@ gulp.task('docs:js', function (done) {
   var path = require('path');
   var webpack = require('webpack');
   var webpackConfig = require('./webpack.config');
+  var argv = require('yargs').argv;
   webpackConfig.output.path = path.join(__dirname, 'docs/js');
+  if(argv.compress === false) {
+    webpackConfig.plugins.pop();
+  }
   webpack(webpackConfig, function (err, stats) {
     if(err) throw err;
     done();
@@ -96,5 +100,15 @@ gulp.task('docs:html', function () {
 });
 
 gulp.task('docs', ['docs:html', 'docs:js', 'docs:css']);
+
+gulp.task('webpack', function (done) {
+  var path = require('path');
+  var webpack = require('webpack');
+  var webpackConfig = require('./webpack.config');
+  webpack(webpackConfig, function (err, stats) {
+    if(err) throw err;
+    done();
+  });
+});
 
 gulp.task('default', ['bs']);
