@@ -1,6 +1,6 @@
 import React from 'react';
 import EventEmitter from 'events';
-import {getLetter, normalizeInput} from 'enigma-minkiele/src/Utils';
+import {getLetter, normalizeInput} from 'enigma-minkiele/dist/Utils';
 import {toInt} from '../../../Utils';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';

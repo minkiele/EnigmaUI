@@ -94,9 +94,24 @@ gulp.task('docs:css', function () {
 });
 
 gulp.task('docs:html', function () {
-  gulp.src('index.html', {
-    cwd: 'sample'
-  }).pipe(gulp.dest('docs'));
+  var App = require('./dist/Enigma');
+  var BackendRenderingEngine = require('./dist/RenderingEngine/Backend');
+  var hogan = require('gulp-hogan');
+  var rename = require('gulp-rename');
+
+  var renderingEngine = new BackendRenderingEngine();
+
+  renderingEngine.on('render', function (markup) {
+    gulp.src('./sample/template.html')
+      .pipe(hogan({
+        application: markup
+      }))
+      .pipe(rename('index.html'))
+      .pipe(gulp.dest('docs'));
+  });
+
+  new App(renderingEngine);
+
 });
 
 gulp.task('docs', ['docs:html', 'docs:js', 'docs:css']);

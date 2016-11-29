@@ -1,6 +1,6 @@
 //Maybe separating constants will solve that circular dependency nightmare with Babel - Webpack
 
-import EnigmaM4 from 'enigma-minkiele/src/EnigmaM4';
+import EnigmaM4 from 'enigma-minkiele/dist/EnigmaM4';
 
 export const TYPE_M3 = 'M3';
 export const TYPE_M4 = 'M4';

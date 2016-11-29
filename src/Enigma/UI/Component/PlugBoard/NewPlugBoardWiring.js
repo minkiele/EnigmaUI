@@ -1,5 +1,5 @@
 import React from 'react';
-import {getLetter, getIndex, normalizeInput} from 'enigma-minkiele/src/Utils';
+import {getLetter, getIndex, normalizeInput} from 'enigma-minkiele/dist/Utils';
 import EventEmitter from 'events';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';

@@ -2,28 +2,28 @@ import EventEmitter from 'events';
 
 import React from 'react';
 
-import EnigmaM3 from 'enigma-minkiele/src/Enigma';
-import EnigmaM4 from 'enigma-minkiele/src/EnigmaM4';
-import RotorI from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorI';
-import RotorII from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorII';
-import RotorIII from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorIII';
-import RotorIV from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorIV';
-import RotorV from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorV';
-import RotorVI from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorVI';
-import RotorVII from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorVII';
-import RotorVIII from 'enigma-minkiele/src/Component/WiredWheel/Rotor/RotorVIII';
+import EnigmaM3 from 'enigma-minkiele/dist/Enigma';
+import EnigmaM4 from 'enigma-minkiele/dist/EnigmaM4';
+import RotorI from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/RotorI';
+import RotorII from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/RotorII';
+import RotorIII from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/RotorIII';
+import RotorIV from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/RotorIV';
+import RotorV from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/RotorV';
+import RotorVI from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/RotorVI';
+import RotorVII from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/RotorVII';
+import RotorVIII from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/RotorVIII';
 
-import ThinRotorBeta from 'enigma-minkiele/src/Component/WiredWheel/Rotor/ThinRotor/ThinRotorBeta';
-import ThinRotorGamma from 'enigma-minkiele/src/Component/WiredWheel/Rotor/ThinRotor/ThinRotorGamma';
+import ThinRotorBeta from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/ThinRotor/ThinRotorBeta';
+import ThinRotorGamma from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/ThinRotor/ThinRotorGamma';
 
-import ReflectorA from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorA';
-import ReflectorB from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorB';
-import ReflectorC from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorC';
-import ReflectorBeta from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorBeta';
-import ReflectorGamma from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ReflectorGamma';
+import ReflectorA from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorA';
+import ReflectorB from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorB';
+import ReflectorC from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorC';
+import ReflectorBeta from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorBeta';
+import ReflectorGamma from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorGamma';
 
-import ThinReflectorB from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ThinReflector/ThinReflectorB';
-import ThinReflectorC from 'enigma-minkiele/src/Component/WiredWheel/Reflector/ThinReflector/ThinReflectorC';
+import ThinReflectorB from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ThinReflector/ThinReflectorB';
+import ThinReflectorC from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ThinReflector/ThinReflectorC';
 
 import * as Const from './Constants';
 

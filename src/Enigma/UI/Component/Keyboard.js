@@ -1,5 +1,5 @@
 import React from 'react';
-import {normalizeInput} from 'enigma-minkiele/src/Utils';
+import {normalizeInput} from 'enigma-minkiele/dist/Utils';
 import EventEmitter from 'events';
 import assign from 'object-assign';
 import Row from 'react-bootstrap/lib/Row';
