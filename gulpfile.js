@@ -93,7 +93,7 @@ gulp.task('docs:css', function () {
     .pipe(gulp.dest('docs/css'))
 });
 
-gulp.task('docs:html', function () {
+gulp.task('docs:html', ['transpile'], function () {
   var App = require('./dist/Enigma');
   var BackendRenderingEngine = require('./dist/RenderingEngine/Backend');
   var hogan = require('gulp-hogan');
@@ -124,6 +124,27 @@ gulp.task('webpack', function (done) {
     if(err) throw err;
     done();
   });
+});
+
+gulp.task('transpile', function () {
+  var path = require('path');
+  var babel = require('gulp-babel');
+  var uglify = require('gulp-uglify');
+  var babelSettings = {
+    "presets": [
+      "es2015",
+      "react"
+    ],
+    "plugins": [
+      "add-module-exports"
+    ]
+  };
+
+  return gulp.src('src/Enigma/**/*.js')
+    .pipe(babel(babelSettings))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist'))
+
 });
 
 gulp.task('default', ['bs']);
