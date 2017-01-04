@@ -31,8 +31,10 @@ export default class NewPlugBoardWiring extends React.Component {
 
   render () {
 
+    let renderAlphabet = this.renderAlphabet.bind(this);
+
     return (
-      <NewPluggableWiring {...this.props} addWiringEvent="change.plugBoard.addWiring" renderAlphabet={ (disabledLetter) => { return this.renderAlphabet(); }} />
+      <NewPluggableWiring {...this.props} addWiringEvent="change.plugBoard.addWiring" renderAlphabet={renderAlphabet} />
     );
   }
 
