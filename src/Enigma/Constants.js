@@ -17,6 +17,7 @@ export const RO_TYPE_VIII = 'VIII';
 export const RE_TYPE_A = 'A';
 export const RE_TYPE_B = 'B';
 export const RE_TYPE_C = 'C';
+export const RE_TYPE_D = 'D';
 export const RE_TYPE_BETA = 'BETA';
 export const RE_TYPE_GAMMA = 'GAMMA';
 

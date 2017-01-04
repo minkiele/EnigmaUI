@@ -19,6 +19,7 @@ import ThinRotorGamma from 'enigma-minkiele/dist/Component/WiredWheel/Rotor/Thin
 import ReflectorA from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorA';
 import ReflectorB from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorB';
 import ReflectorC from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorC';
+import ReflectorD from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorD';
 import ReflectorBeta from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorBeta';
 import ReflectorGamma from 'enigma-minkiele/dist/Component/WiredWheel/Reflector/ReflectorGamma';
 
@@ -90,6 +91,28 @@ export default class Enigma {
 
     });
 
+    this.eventManager.on('change.reflector.removeWiring', (wiring) => {
+      try {
+        this.enigma.reflector.unplugWire(wiring[0], wiring[1]);
+        this.render();
+      } catch (err) {
+        //Keep calm and carry on
+        //Silently accept the situation
+      }
+    });
+
+    this.eventManager.on('change.reflector.addWiring', (newWiring) => {
+
+      try {
+        this.enigma.reflector.plugWire(newWiring[0], newWiring[1]);
+        this.render();
+      } catch (err) {
+        //Keep calm and carry on
+        //Silently accept the situation
+      }
+
+    });
+
     this.eventManager.on('change.keyboard.input', (input) => {
       try {
         this.setLastEncodedLetter(this.enigma.getEncodedLetter(input));
@@ -134,6 +157,8 @@ export default class Enigma {
         break;
       case Const.RE_TYPE_C:
         reflector = new ReflectorC();
+      case Const.RE_TYPE_D:
+        reflector = new ReflectorD();
         break;
       case Const.RE_TYPE_BETA:
         reflector = new ReflectorBeta();
@@ -163,6 +188,8 @@ export default class Enigma {
       return Const.RE_TYPE_B;
     } else if(reflector instanceof ReflectorC) {
       return Const.RE_TYPE_C;
+    } else if(reflector instanceof ReflectorD) {
+      return Const.RE_TYPE_D;
     } else if(reflector instanceof ReflectorBeta) {
       return Const.RE_TYPE_BETA;
     } else if(reflector instanceof ReflectorGamma) {
