@@ -308,6 +308,12 @@ export default class Enigma {
 
   }
 
+  getReflectorWirings () {
+    if(this.getReflectorType() === Const.RE_TYPE_D) {
+      return this.enigma.reflector.wirings.slice();
+    }
+  }
+
   setLastEncodedLetter (letter) {
     this.lastEncodedLetter = letter;
   }
@@ -332,6 +338,7 @@ export default class Enigma {
         rightRotor={this.getRotorProps(Const.RIGHT_ROTOR)}
         plugBoardWirings={this.getPlugBoardWirings()}
         lastEncodedLetter={this.getLastEncodedLetter()}
+        reflectorWirings={this.getReflectorWirings()}
         eventManager={this.eventManager}
       />
     );

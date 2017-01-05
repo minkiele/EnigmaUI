@@ -47,7 +47,7 @@ export default class Enigma extends React.Component {
       case TYPE_M3:
         title = 'Reflector';
         config = (
-          <Reflector type={this.props.reflector} eventManager={this.props.eventManager} />
+          <Reflector type={this.props.reflector} wirings={this.props.reflectorWirings} eventManager={this.props.eventManager} />
         );
         break;
       case TYPE_M4:

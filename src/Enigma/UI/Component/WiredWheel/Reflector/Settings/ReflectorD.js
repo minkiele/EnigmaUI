@@ -1,26 +1,27 @@
 import React from 'react';
-import Well from 'react-bootstrap/lib/Well';
-import FormControl from 'react-bootstrap/lib/FormControl';
-import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import EventEmitter from 'events';
+import NewReflectorWiring from './NewReflectorWiring';
+import Pluggable from '../../../Pluggable/Pluggable';
 
-export default class ReflectorOptions extends React.Component {
+export const WIRINGS_MAX_SIZE = 12;
 
-  renderWirings () {
-    let wirings = [];
-    return wirings;
-  }
+export default class ReflectorD extends React.Component {
 
   render () {
+
+    let newPluggableWiring = <NewReflectorWiring {...this.props} />;
+
     return (
-      <Well>
-        <ControlLabel>Reflector Wirings</ControlLabel>
-        <ListGroup>
-          {this.renderWirings()}
-        </ListGroup>
-      </Well>
+      <Pluggable {...this.props} maxSize={WIRINGS_MAX_SIZE} newPluggableWiring={newPluggableWiring} removeWiringEvent="change.reflector.removeWiring" />
     );
   }
-
 }
+
+ReflectorD.propTypes = {
+  wirings: React.PropTypes.array.isRequired,
+  eventManager: React.PropTypes.instanceOf(EventEmitter)
+};
+
+ReflectorD.defaultProps = {
+  wirings: []
+};
