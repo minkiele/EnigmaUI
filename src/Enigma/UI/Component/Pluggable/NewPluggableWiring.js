@@ -1,5 +1,4 @@
 import React from 'react';
-import {getLetter, getIndex, normalizeInput} from 'enigma-minkiele/dist/Utils';
 import EventEmitter from 'events';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -22,12 +21,7 @@ export default class NewPluggableWiring extends React.Component {
   }
 
   isWiringComplete () {
-    try {
-      this.state.wiring.forEach(normalizeInput);
-      return true;
-    } catch (err) {
-      return false;
-    }
+    return this.props.validateWiringCallback(this.state.wiring);
   }
 
   updatePlug (value, key) {
@@ -57,7 +51,7 @@ export default class NewPluggableWiring extends React.Component {
           <FormGroup>
             <FormControl componentClass="select" value={this.state.wiring[0]} onChange={(evt) => { this.updatePlug(evt.target.value, 0); }}>
               <option value=""></option>
-              {this.props.renderAlphabet(this.state.wiring[1])}
+              {this.props.renderAlphabetCallback(this.state.wiring[1])}
             </FormControl>
           </FormGroup>
         </Col>
@@ -65,7 +59,7 @@ export default class NewPluggableWiring extends React.Component {
           <FormGroup>
             <FormControl componentClass="select" value={this.state.wiring[1]} onChange={(evt) => { this.updatePlug(evt.target.value, 1); }}>
               <option value=""></option>
-              {this.props.renderAlphabet(this.state.wiring[0])}
+              {this.props.renderAlphabetCallback(this.state.wiring[0])}
             </FormControl>
           </FormGroup>
         </Col>
@@ -81,7 +75,8 @@ export default class NewPluggableWiring extends React.Component {
 NewPluggableWiring.propTypes = {
   wirings: React.PropTypes.array.isRequired,
   addWiringEvent: React.PropTypes.string.isRequired,
-  renderAlphabet: React.PropTypes.func.isRequired,
+  renderAlphabetCallback: React.PropTypes.func.isRequired,
+  validateWiringCallback: React.PropTypes.func.isRequired,
   eventManager: React.PropTypes.instanceOf(EventEmitter)
 };
 

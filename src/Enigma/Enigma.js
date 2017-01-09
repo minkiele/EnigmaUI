@@ -92,6 +92,11 @@ export default class Enigma {
     });
 
     this.eventManager.on('change.reflector.removeWiring', (wiring) => {
+
+      wiring = wiring.map((value) => {
+        return parseInt(value);
+      });
+
       try {
         this.enigma.reflector.unplugWire(wiring[0], wiring[1]);
         this.render();
@@ -102,6 +107,10 @@ export default class Enigma {
     });
 
     this.eventManager.on('change.reflector.addWiring', (newWiring) => {
+
+      newWiring = newWiring.map((value) => {
+        return parseInt(value);
+      });
 
       try {
         this.enigma.reflector.plugWire(newWiring[0], newWiring[1]);

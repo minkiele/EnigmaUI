@@ -5,6 +5,15 @@ import NewPluggableWiring from '../Pluggable/NewPluggableWiring';
 
 export default class NewPlugBoardWiring extends React.Component {
 
+  isWiringComplete (wiring) {
+    try {
+      wiring.forEach(normalizeInput);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
   getForbiddenLetters (andLetter = '') {
     let forbiddenLetters = [];
     this.props.wirings.forEach(function (wiring) {
@@ -32,9 +41,10 @@ export default class NewPlugBoardWiring extends React.Component {
   render () {
 
     let renderAlphabet = this.renderAlphabet.bind(this);
+    let isWiringComplete = this.isWiringComplete;
 
     return (
-      <NewPluggableWiring {...this.props} addWiringEvent="change.plugBoard.addWiring" renderAlphabet={renderAlphabet} />
+      <NewPluggableWiring {...this.props} addWiringEvent="change.plugBoard.addWiring" renderAlphabetCallback={renderAlphabet} validateWiringCallback={isWiringComplete} />
     );
   }
 

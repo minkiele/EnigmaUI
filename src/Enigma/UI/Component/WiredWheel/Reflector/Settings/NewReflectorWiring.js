@@ -5,12 +5,16 @@ import NewPluggableWiring from '../../../Pluggable/NewPluggableWiring';
 
 export default class NewReflectorWiring extends React.Component {
 
+  isWiringComplete (wiring) {
+    return !isNaN(parseInt(wiring[0])) && !isNaN(parseInt(wiring[1]));
+  }
+
   getForbiddenLetters (andLetter = '') {
     let forbiddenLetters = [];
     this.props.wirings.forEach(function (wiring) {
       forbiddenLetters.push.apply(forbiddenLetters, wiring);
     });
-    if(andLetter.length > 0){
+    if(!isNaN(parseInt(andLetter))){
     forbiddenLetters.push(andLetter);
     }
     return forbiddenLetters;
@@ -31,9 +35,10 @@ export default class NewReflectorWiring extends React.Component {
   render () {
 
     let renderAlphabet = this.renderAlphabet.bind(this);
+    let isWiringComplete = this.isWiringComplete;
 
     return (
-      <NewPluggableWiring {...this.props} addWiringEvent="change.reflector.addWiring" renderAlphabet={renderAlphabet} />
+      <NewPluggableWiring {...this.props} addWiringEvent="change.reflector.addWiring" renderAlphabetCallback={renderAlphabet} validateWiringCallback={isWiringComplete} />
     );
   }
 
